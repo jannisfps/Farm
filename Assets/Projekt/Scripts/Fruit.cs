@@ -1,28 +1,43 @@
 using UnityEngine;
 
-public class Note : MonoBehaviour
-{   
-    private Rigidbody2D rb;
+public class Fruit : MonoBehaviour
+{
+    public float fallSpeed = 5f;
+    public float targetY = 0f;
+    public float perfectThreshold = 0.3f;
+    public float okeyThreshold = 0.7f;
+    public float normalThreshold = 1.2f;
 
-    void Start()
-    {
-        rb = GetComponent<Rigidbody2D>();
-        GameManager.instance.fruits.Add(gameObject.transform);
-    }
-
-    // Update is called once per frame
     void Update()
     {
-        rb.linearVelocityY = -GameManager.instance.GameSpeed;
+        transform.Translate(Vector3.down * fallSpeed * Time.deltaTime);
 
-/*
-        if(transform.position.y <= -10)
+        if (Input.GetKeyDown(KeyCode.F))
         {
-            GameManager.instance.player.GainHealth(-1);
-            Destroy(gameObject);
-            GameManager.instance.fruits.Remove(gameObject.transform);
-            // TODO: condition anpassen
+            float distance = Mathf.Abs(transform.position.y - targetY);
+
+            if (distance <= normalThreshold)
+            {
+                HitType hit = GetHitType(distance);
+                
+                Debug.Log($"Hit: {hit} | Abstand: {distance}");
+
+                Destroy(gameObject);
+            }
         }
-*/
+
+        if (transform.position.y <= -10f)
+        {
+            Debug.Log("Hit: Missed (zu weit unten)");
+
+            Destroy(gameObject);
+        }
+    }
+
+    private HitType GetHitType(float distance)
+    {
+        if (distance <= perfectThreshold) return HitType.Perfect;
+        if (distance <= okeyThreshold) return HitType.Okey;
+        return HitType.Normal;
     }
 }
