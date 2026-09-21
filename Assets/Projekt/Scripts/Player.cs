@@ -4,17 +4,22 @@ using TMPro;﻿
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
+using UnityEngine.Scripting.APIUpdating;
 
 public class Player : MonoBehaviour
 {   
     public TMP_Text healthText;
     public TMP_Text scoreText;
-    public int health {get; private set;}
     public float score = 0;
+
 
     private bool isHitting;
     private SpriteRenderer sprite;
+    private int currentField;
     
+    public int health {get; private set;}
+
     void Start()
     {   
         sprite = GetComponent<SpriteRenderer>();
@@ -23,30 +28,20 @@ public class Player : MonoBehaviour
         GameManager.instance.player = this;
 
         isHitting = false;
+        currentField = GameManager.instance.sv.fieldstartingNumber;
     }
 
     void Update()
     {   
-        
+        int moveDirection = 1;
+        if (Input.GetKeyDown(KeyCode.LeftArrow))    Move(-moveDirection);
+        if (Input.GetKeyDown(KeyCode.RightArrow))   Move(moveDirection);
+
         //isHitting = true;
         //StartCoroutine(Hitting());
 
-        /*if (Input.GetKeyDown(KeyCode.F))
-        {   
-            HitType hit = GameManager.instance.CheckHit();
-            if (hit != HitType.Missed)
-            {
-                Debug.Log("Player: catched fruit : " + hit.ToString());
-                // TODO: score
-            }
-            else Debug.Log("Player: Didnt catch");
-            
-            
-        } */
-
         healthText.text = "HEALTH: " + health;
-        
-        scoreText.text = "HEALTH: " + score;
+        scoreText.text = "SCORE: " + score;
     }
 
     public void GainHealth(int amount)
@@ -57,6 +52,14 @@ public class Player : MonoBehaviour
         {
             // TODO: GameOver
         }
+    }
+
+    public void Move(int direction)
+    {   
+        int max = GameManager.instance.sv.fieldstartingNumber;
+        currentField = Mathf.Clamp(
+            currentField += 1 * direction, max, -max);
+        transform.position = new Vector3(currentField, transform.position.y, 0);
     }
 
     IEnumerator Hitting()

@@ -65,8 +65,8 @@ public class GameManager : MonoBehaviour
         
         float distance = (point.position.y - minY) / (maxY - minY); // always in [0, 1]
 
-        if (distance <= sv.normalThreshold)     return HitType.Normal;   
-        if (distance >= 1-sv.perfectThreshold)  return HitType.Perfect;
+        if (distance <= sv.normalThreshold / 100)       return HitType.Normal;   
+        if (distance >= 1 - sv.perfectThreshold / 100)  return HitType.Perfect;
 
         return HitType.Okey;
 

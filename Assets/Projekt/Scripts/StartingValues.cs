@@ -16,4 +16,8 @@ public class StartingValues : ScriptableObject
     [Header("Start PlayerStats")]
     public int health = 3;
     public float hitCooldown = 0.05f;
+
+    
+    [Header("Field settings")]
+    public int fieldstartingNumber;
 }
