@@ -6,7 +6,7 @@ public class Spawner2D : MonoBehaviour
     [Header("Einstellungen")]
     public GameObject prefabToSpawn;
     public int countPerSpawn = 1;
-    public float lineWidth = 10f;
+    public float radius = 2f;
     public float spawnInterval = 3f;
     public float destroyDelay = 10f;
 
@@ -34,7 +34,7 @@ public class Spawner2D : MonoBehaviour
     {
         for (int i = 0; i < countPerSpawn; i++)
         {
-            Vector2 randomPosition = GetRandomPositionOnLine();
+            Vector2 randomPosition = GetRandomPositionInRadius();
 
             if (prefabToSpawn != null)
             {
@@ -44,17 +44,15 @@ public class Spawner2D : MonoBehaviour
         }
     }
 
-    public Vector2 GetRandomPositionOnLine()
+    public Vector2 GetRandomPositionInRadius()
     {
-        float randomX = Random.Range(-lineWidth / 2f, lineWidth / 2f);
-        return new Vector2(transform.position.x + randomX, transform.position.y);
+        Vector2 randomPoint = Random.insideUnitCircle * radius;
+        return (Vector2)transform.position + randomPoint;
     }
 
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;
-        Vector3 left = transform.position + Vector3.left * (lineWidth / 2f);
-        Vector3 right = transform.position + Vector3.right * (lineWidth / 2f);
-        Gizmos.DrawLine(left, right);
+        Gizmos.DrawWireSphere(transform.position, radius);
     }
 }
