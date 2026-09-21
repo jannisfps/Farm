@@ -8,6 +8,7 @@ public class Spawner2D : MonoBehaviour
     public int countPerSpawn = 1;
     public float lineWidth = 10f;
     public float spawnInterval = 3f;
+    public float destroyDelay = 10f;
 
     [Header("Optionen")]
     public bool spawnOnStart = true;
@@ -37,7 +38,8 @@ public class Spawner2D : MonoBehaviour
 
             if (prefabToSpawn != null)
             {
-                Instantiate(prefabToSpawn, randomPosition, Quaternion.identity);
+                GameObject spawnedObject = Instantiate(prefabToSpawn, randomPosition, Quaternion.identity);
+                Destroy(spawnedObject, destroyDelay);
             }
         }
     }
