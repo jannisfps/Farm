@@ -1,6 +1,9 @@
 using System.Runtime;
 using UnityEngine;
-using TMPro;
+using TMPro;﻿
+using System;
+using System.Collections;
+using System.Collections.Generic;
 
 public class Player : MonoBehaviour
 {   
@@ -8,30 +11,38 @@ public class Player : MonoBehaviour
     public TMP_Text scoreText;
     public int health {get; private set;}
     public float score = 0;
+
+    private bool isHitting;
+    private SpriteRenderer sprite;
     
     void Start()
-    {
+    {   
+        sprite = GetComponent<SpriteRenderer>();
+
         health = GameManager.instance.sv.health;
         GameManager.instance.player = this;
+
+        isHitting = false;
     }
 
-    // Update is called once per frame
     void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.F))
+    {   
+        
+        //isHitting = true;
+        //StartCoroutine(Hitting());
+
+        /*if (Input.GetKeyDown(KeyCode.F))
         {   
             HitType hit = GameManager.instance.CheckHit();
             if (hit != HitType.Missed)
             {
-                // TODO: Hit Cooldown 
                 Debug.Log("Player: catched fruit : " + hit.ToString());
                 // TODO: score
             }
-            else
-            {
-                Debug.Log("Player: Didnt catch");
-            }
-        } 
+            else Debug.Log("Player: Didnt catch");
+            
+            
+        } */
 
         healthText.text = "HEALTH: " + health;
         
@@ -46,5 +57,21 @@ public class Player : MonoBehaviour
         {
             // TODO: GameOver
         }
+    }
+
+    IEnumerator Hitting()
+    {
+        UpdateHitColor();
+        yield return new WaitForSeconds(GameManager.instance.sv.hitCooldown);
+        isHitting = false;
+        UpdateHitColor();
+    }
+
+    public void UpdateHitColor()
+    {
+        if (isHitting)
+            sprite.color = Color.blue;
+        else
+            sprite.color = Color.white;
     }
 }

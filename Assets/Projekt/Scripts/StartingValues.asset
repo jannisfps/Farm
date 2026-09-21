@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: StartingValues
   m_EditorClassIdentifier: 
   startGameSpeed: 1
-  correctThreshold: 0.25
+  correctThreshold: 0.375
   hitY: -2.5
   health: 3

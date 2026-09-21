@@ -1,32 +1,46 @@
+using JetBrains.Rider.Unity.Editor;
 using UnityEngine;
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 public class Fruit : MonoBehaviour
-{
-    public float fallSpeed = 5f;
-    public float targetY = 0f;
-    public float perfectThreshold = 0.3f;
-    public float okeyThreshold = 0.7f;
-    public float normalThreshold = 1.2f;
+{   
+    [SerializeField] private List<KeyCode> requiredKeys = new List<KeyCode>();
+    
+    private HashSet<KeyCode> _pressedThisFrame = new HashSet<KeyCode>();
+    private bool _collected;
+    private Rigidbody2D rb;
+
+    void Start()
+    {
+        rb = GetComponent<Rigidbody2D>();
+    }
 
     void Update()
-    {
-        transform.Translate(Vector3.down * fallSpeed * Time.deltaTime);
+    {   
+        rb.linearVelocityY = -GameManager.instance.GameSpeed;
 
-        if (Input.GetKeyDown(KeyCode.F))
+        if (_collected) return;
+
+        //----------------------------------------------------
+        // Track which required keys are currently held
+        //----------------------------------------------------
+        _pressedThisFrame.Clear();
+        foreach (var key in requiredKeys)
+            if (Input.GetKeyDown(key))
+                _pressedThisFrame.Add(key);
+
+
+        //----------------------------------------------------
+        // Check if ALL required keys were pressed this frame
+        //----------------------------------------------------
+        if (_pressedThisFrame.Count == requiredKeys.Count)
         {
-            float distance = Mathf.Abs(transform.position.y - targetY);
-
-            if (distance <= normalThreshold)
-            {
-                HitType hit = GetHitType(distance);
-                
-                Debug.Log($"Hit: {hit} | Abstand: {distance}");
-
-                Destroy(gameObject);
-            }
+            TryToCollect();
         }
 
-        if (transform.position.y <= -10f)
+
+        if (transform.position.y <= -10f) //vllt andere höhe später
         {
             Debug.Log("Hit: Missed (zu weit unten)");
 
@@ -34,10 +48,15 @@ public class Fruit : MonoBehaviour
         }
     }
 
-    private HitType GetHitType(float distance)
-    {
-        if (distance <= perfectThreshold) return HitType.Perfect;
-        if (distance <= okeyThreshold) return HitType.Okey;
-        return HitType.Normal;
+    private void TryToCollect()
+    {   
+        HitType hit = GameManager.instance.CheckHit(transform);
+            
+        if (hit != HitType.Missed)
+        {
+            Debug.Log("FRUIT: catched fruit : " + hit.ToString());
+            // score hier -> hitType kann hier in score converted werden
+        } 
+        else Debug.Log("FRUIT: missed fruit : " + hit.ToString());
     }
 }

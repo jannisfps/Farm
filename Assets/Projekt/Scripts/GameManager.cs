@@ -17,8 +17,6 @@ public class GameManager : MonoBehaviour
 {   
     public static GameManager instance;
 
-    public List<Transform> fruits = new List<Transform>();
-    
 
     public StartingValues sv;
     public float GameSpeed {get; private set;}
@@ -41,23 +39,22 @@ public class GameManager : MonoBehaviour
         
     }
 
-    public HitType CheckHit()
+    public HitType CheckHit(Transform fr)
     {   
         float correctThreshold = sv.correctThreshold;
-        float hitY = sv.hitY;
+        float hitY = sv.hitY;   
 
-        foreach (Transform fr in fruits)
-        {   
-            float pos = fr.position.y;
-            if (pos < hitY - correctThreshold && pos > hitY + correctThreshold)
-            {
-                // missed (keine fruit im catch radius)
-            }
-            if (pos < hitY + correctThreshold && pos > hitY - correctThreshold)
-            {
-                return CalculateHit(fr, hitY, correctThreshold); // hit!
-            }
+        float pos = fr.position.y;
+
+        if (pos < hitY - correctThreshold && pos > hitY + correctThreshold)
+        {
+            // missed (keine fruit im catch radius)
         }
+        if (pos < hitY + correctThreshold && pos > hitY - correctThreshold)
+        {
+            return CalculateHit(fr, hitY, correctThreshold); // hit!
+        }
+        
         return HitType.Missed; //missed
     }
 
@@ -68,8 +65,8 @@ public class GameManager : MonoBehaviour
         
         float distance = (point.position.y - minY) / (maxY - minY); // always in [0, 1]
 
-        if (distance <= 0.33f)  return HitType.Normal;   
-        if (distance >= 0.75f)  return HitType.Perfect;
+        if (distance <= sv.normalThreshold)     return HitType.Normal;   
+        if (distance >= 1-sv.perfectThreshold)  return HitType.Perfect;
 
         return HitType.Okey;
 
