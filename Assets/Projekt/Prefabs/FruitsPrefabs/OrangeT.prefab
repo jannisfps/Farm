@@ -26,8 +26,8 @@ Transform:
   m_GameObject: {fileID: 6690389884219914418}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.005198693, y: -0, z: -0.12}
-  m_LocalScale: {x: 0.22037467, y: 0.21266276, z: 1}
+  m_LocalPosition: {x: -0.03, y: -0.11, z: -0.12}
+  m_LocalScale: {x: 0.4269391, y: 0.4548355, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7948238297850489542}
@@ -117,7 +117,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.004801307, y: 3.99, z: 0.12}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.4451, y: 0.4567, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7335183072237199667}
@@ -167,8 +167,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 0.93207544, g: 0.6293711, b: 0.20927721, a: 1}
+  m_Sprite: {fileID: 4121880872312635667, guid: 4a2face88fd09e84bb9daefe9fa369a0, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -239,8 +239,8 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_Radius: 0.5
+  m_Offset: {x: 0, y: -0.1015743}
+  m_Radius: 1.0437202
 --- !u!114 &6320656343851533004
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -253,4 +253,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2dc192df257e8b74d99e4bd02f82a708, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  requiredKeys: 14010000
+  fruitData: {fileID: 0}

@@ -26,8 +26,8 @@ Transform:
   m_GameObject: {fileID: 8910431336648160059}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: 0.7007147, w: 0.71344167}
-  m_LocalPosition: {x: 0.0027627945, y: 0.41906786, z: -0.12}
-  m_LocalScale: {x: 0.13477454, y: 0.16796531, z: 1}
+  m_LocalPosition: {x: 0.12200177, y: 1.463, z: -0.12}
+  m_LocalScale: {x: 0.38915607, y: 0.57205963, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5242678984274129818}
@@ -95,6 +95,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2445937036875315618, guid: 14a961ad627c8c04fb6c0875218c9901, type: 3}
+      propertyPath: m_Radius
+      value: 1.6683812
+      objectReference: {fileID: 0}
+    - target: {fileID: 2445937036875315618, guid: 14a961ad627c8c04fb6c0875218c9901, type: 3}
+      propertyPath: m_Offset.y
+      value: -0.016303701
+      objectReference: {fileID: 0}
     - target: {fileID: 3617310923906783789, guid: 14a961ad627c8c04fb6c0875218c9901, type: 3}
       propertyPath: requiredKeys.Array.size
       value: 2
@@ -104,12 +112,16 @@ PrefabInstance:
       value: 274
       objectReference: {fileID: 0}
     - target: {fileID: 6753598406098941644, guid: 14a961ad627c8c04fb6c0875218c9901, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 7381965769198725172, guid: 7944b9c24e8d64c4599f5c6224c5891b, type: 3}
+    - target: {fileID: 6753598406098941644, guid: 14a961ad627c8c04fb6c0875218c9901, type: 3}
       propertyPath: m_Color.b
-      value: 0.25471687
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6753598406098941644, guid: 14a961ad627c8c04fb6c0875218c9901, type: 3}
       propertyPath: m_Color.g
-      value: 0.8937083
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6753598406098941644, guid: 14a961ad627c8c04fb6c0875218c9901, type: 3}
       propertyPath: m_Color.r
@@ -120,12 +132,20 @@ PrefabInstance:
       value: BananeT Variant
       objectReference: {fileID: 0}
     - target: {fileID: 7637471010848478310, guid: 14a961ad627c8c04fb6c0875218c9901, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.27159595
+      objectReference: {fileID: 0}
+    - target: {fileID: 7637471010848478310, guid: 14a961ad627c8c04fb6c0875218c9901, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.28623477
+      objectReference: {fileID: 0}
+    - target: {fileID: 7637471010848478310, guid: 14a961ad627c8c04fb6c0875218c9901, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.41
+      value: 18.3015
       objectReference: {fileID: 0}
     - target: {fileID: 7637471010848478310, guid: 14a961ad627c8c04fb6c0875218c9901, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 6.74
+      value: -3.9741
       objectReference: {fileID: 0}
     - target: {fileID: 7637471010848478310, guid: 14a961ad627c8c04fb6c0875218c9901, type: 3}
       propertyPath: m_LocalPosition.z
@@ -161,19 +181,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8477872240540374153, guid: 14a961ad627c8c04fb6c0875218c9901, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.13477454
+      value: 0.38915607
       objectReference: {fileID: 0}
     - target: {fileID: 8477872240540374153, guid: 14a961ad627c8c04fb6c0875218c9901, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.16796531
+      value: 0.57205963
       objectReference: {fileID: 0}
     - target: {fileID: 8477872240540374153, guid: 14a961ad627c8c04fb6c0875218c9901, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.011762619
+      value: 0.08
       objectReference: {fileID: 0}
     - target: {fileID: 8477872240540374153, guid: 14a961ad627c8c04fb6c0875218c9901, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.4200673
+      value: -0.96
       objectReference: {fileID: 0}
     - target: {fileID: 8477872240540374153, guid: 14a961ad627c8c04fb6c0875218c9901, type: 3}
       propertyPath: m_LocalRotation.w
