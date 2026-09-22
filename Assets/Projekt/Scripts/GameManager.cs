@@ -8,7 +8,7 @@ public enum FruitState
 }
 public enum HitType
 {
-    Missed, Normal, Okey, Perfect
+    Normal, Okey, Perfect
 }
 
 
@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
 {   
     public static GameManager instance;
 
+    public string currentName = "Unknown";
 
     public StartingValues sv;
     public float GameSpeed {get; private set;}
@@ -36,29 +37,10 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        
+        GameSpeed += sv.gameSpeedIncrease *Time.deltaTime;
     }
 
-    public HitType CheckHit(Transform fr)
-    {   
-        float correctThreshold = sv.correctThreshold;
-        float hitY = sv.hitY;   
-
-        float pos = fr.position.y;
-
-        if (pos < hitY - correctThreshold && pos > hitY + correctThreshold)
-        {
-            // missed (keine fruit im catch radius)
-        }
-        if (pos < hitY + correctThreshold && pos > hitY - correctThreshold)
-        {
-            return CalculateHit(fr, hitY, correctThreshold); // hit!
-        }
-        
-        return HitType.Missed; //missed
-    }
-
-    private HitType CalculateHit(Transform point, float center, float threshold)
+    public HitType CalculateHit(Transform point, float center, float threshold)
     {   
         float minY = center - threshold;
         float maxY = center + threshold;
