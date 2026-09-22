@@ -6,6 +6,11 @@ using System.Runtime.CompilerServices;
 public class Fruit : MonoBehaviour
 {   
     [SerializeField] private List<KeyCode> requiredKeys = new List<KeyCode>();
+
+    [Header("Score Values per HitType")]
+    [SerializeField] private float perfectScore = 100f;
+    [SerializeField] private float okeyScore = 50f;
+    [SerializeField] private float normalScore = 25f;
     
     private HashSet<KeyCode> _pressedThisFrame = new HashSet<KeyCode>();
     private bool _collected;
@@ -34,7 +39,7 @@ public class Fruit : MonoBehaviour
         //----------------------------------------------------
         // Check if ALL required keys were pressed this frame
         //----------------------------------------------------
-        if (_pressedThisFrame.Count == requiredKeys.Count)
+        if (requiredKeys.Count > 0 && _pressedThisFrame.Count == requiredKeys.Count)
         {
             TryToCollect();
         }
@@ -54,8 +59,32 @@ public class Fruit : MonoBehaviour
             
         if (hit != HitType.Missed)
         {
+            _collected = true;
             Debug.Log("FRUIT: catched fruit : " + hit.ToString());
-            // score hier -> hitType kann hier in score converted werden
+
+            // Punkte basierend auf HitType bestimmen
+            float addedScore = 0f;
+            switch (hit)
+            {
+                case HitType.Perfect:
+                    addedScore = perfectScore;
+                    break;
+                case HitType.Okey:
+                    addedScore = okeyScore;
+                    break;
+                case HitType.Normal:
+                    addedScore = normalScore;
+                    break;
+            }
+
+            // Score beim Player aufaddieren
+            if (GameManager.instance != null && GameManager.instance.player != null)
+            {
+                GameManager.instance.player.score += addedScore;
+            }
+
+            // Frucht zerstören, damit sie nicht mehrfach getroffenen werden kann
+            Destroy(gameObject);
         } 
         else Debug.Log("FRUIT: missed fruit : " + hit.ToString());
     }
