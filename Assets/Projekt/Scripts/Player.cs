@@ -50,7 +50,7 @@ public class Player : MonoBehaviour
 
         if (health <= 0)
         {
-            // TODO: GameOver
+            GameOver();
         }
     }
 
@@ -76,5 +76,12 @@ public class Player : MonoBehaviour
             sprite.color = Color.blue;
         else
             sprite.color = Color.white;
+    }
+
+    public void GameOver()
+    {
+        // TODO
+        // + Other behavior
+        HighScore.instance.AddNewHighScore(GameManager.instance.currentName, (int)score); 
     }
 }
