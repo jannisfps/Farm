@@ -4,8 +4,6 @@ using TMPro;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.Mathematics;
-using UnityEngine.Scripting.APIUpdating;
 
 public class Player : MonoBehaviour
 {   
@@ -17,10 +15,12 @@ public class Player : MonoBehaviour
     private bool isHitting;
     private SpriteRenderer sprite;
     private int currentField;
+    private Fruit fruit;
+    private HashSet<KeyCode> _pressedThisFrame = new HashSet<KeyCode>();
     
     public int health {get; private set;}
 
-    void Start()
+    void Awake()
     {   
         sprite = GetComponent<SpriteRenderer>();
 
@@ -29,19 +29,47 @@ public class Player : MonoBehaviour
 
         isHitting = false;
         currentField = GameManager.instance.sv.fieldstartingNumber;
+
     }
 
     void Update()
     {   
-        int moveDirection = 1;
-        if (Input.GetKeyDown(KeyCode.LeftArrow))    Move(-moveDirection);
-        if (Input.GetKeyDown(KeyCode.RightArrow))   Move(moveDirection);
+        if(GameManager.instance.fruits.Count == 0) return;
+        
+        fruit = GameManager.instance.fruits[0];
 
-        //isHitting = true;
-        //StartCoroutine(Hitting());
+        _pressedThisFrame.Clear();
+        foreach(KeyCode key in fruit.fruitData.requiredKeys)
+        {
+            if (Input.GetKeyDown(key))
+            {
+                _pressedThisFrame.Add(key);
+            }
+        }
+
+        if (_pressedThisFrame.Count == 0) return;
+        
+        isHitting = true;
+        StartCoroutine(Hitting());
+        
+        if (_pressedThisFrame.Count == fruit.fruitData.requiredKeys.Count)
+        {
+            score += AddScore(GameManager.instance.CalculateHit(fruit));
+
+            fruit.CollectFruit();
+            
+        
+            //fruit.MissFruit();
+        }
+            
 
         healthText.text = "HEALTH: " + health;
         scoreText.text = "SCORE: " + score;
+    }
+
+    public float AddScore(HitType type)
+    {
+        return 0;
     }
 
     public void GainHealth(int amount)

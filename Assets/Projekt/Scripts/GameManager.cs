@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
+using System.Diagnostics;
+using System.Collections;
 
 public enum FruitState
 {
@@ -18,10 +20,17 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
 
     public string currentName = "Unknown";
+    public List<Fruit> fruits = new List<Fruit>();
+
 
     public StartingValues sv;
     public float GameSpeed {get; private set;}
     public Player player;
+
+    [SerializeField] Transform normalField;
+    [SerializeField] Transform goodField;
+    [SerializeField] Transform perfectField;
+    [SerializeField] Transform missedField;
 
     void Awake()
     {
@@ -37,19 +46,17 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        GameSpeed += sv.gameSpeedIncrease *Time.deltaTime;
+        GameSpeed += sv.gameSpeedIncrease * Time.deltaTime;
     }
 
-    public HitType CalculateHit(Transform point, float center, float threshold)
+    IEnumerator StartRound()
+    {
+        yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Space));
+    }
+
+    public HitType CalculateHit(Fruit fruit)
     {   
-        float minY = center - threshold;
-        float maxY = center + threshold;
-        
-        float distance = (point.position.y - minY) / (maxY - minY); // always in [0, 1]
-
-        if (distance <= sv.normalThreshold / 100)       return HitType.Normal;   
-        if (distance >= 1 - sv.perfectThreshold / 100)  return HitType.Perfect;
-
+        // SCORE CALCULATION
         return HitType.Okey;
 
         //------------------------------------------------------------------------------------

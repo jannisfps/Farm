@@ -106,7 +106,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDamping: 0
   m_AngularDamping: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -148,7 +148,7 @@ CircleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -166,7 +166,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2dc192df257e8b74d99e4bd02f82a708, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  requiredKeys: 13010000
+  fruitData: {fileID: 11400000, guid: cc1725e5c5e490e468ba5fb131e91a89, type: 2}
 --- !u!1 &6338132050219169140
 GameObject:
   m_ObjectHideFlags: 0

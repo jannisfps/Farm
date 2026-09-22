@@ -6,9 +6,13 @@ public class StartingValues : ScriptableObject
     [Header("Initial GameSpeed")]
     public float startGameSpeed = 4f;
     [Header("GameSpeed Increase every Sec.")]
-    public float gameSpeedIncrease = 0.1f;
+    public float gameSpeedIncrease = 0.01f;
 
     [Header("Hitting values")]
+    public float visualOffset = 30f;
+    public float inputOffset = 30f;
+    public float threshold= 135f;
+
     [Header("Thresholds in % (zusammen 100 max. -> Rest dazwischen wird als 'Good' gewertet)")]
     public float perfectThreshold = 25;
     public float normalThreshold = 33; 
