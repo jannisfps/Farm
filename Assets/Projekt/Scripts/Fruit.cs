@@ -1,62 +1,62 @@
-using JetBrains.Rider.Unity.Editor;
 using UnityEngine;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using Unity.VisualScripting;
 
 public class Fruit : MonoBehaviour
 {   
-    [SerializeField] private List<KeyCode> requiredKeys = new List<KeyCode>();
+    [SerializeField] private FruitData fruitData;
 
-    [Header("Score Values per HitType")]
-    [SerializeField] private float perfectScore = 100f;
-    [SerializeField] private float okeyScore = 50f;
-    [SerializeField] private float normalScore = 25f;
-    
     private HashSet<KeyCode> _pressedThisFrame = new HashSet<KeyCode>();
     private bool _collected;
     private Rigidbody2D rb;
+    private SpriteRenderer spriteRenderer;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+
+        
+        if (fruitData != null && fruitData.fruitSprite != null && spriteRenderer != null)
+        {
+            spriteRenderer.sprite = fruitData.fruitSprite;
+        }
     }
 
     void Update()
     {   
         rb.linearVelocityY = -GameManager.instance.GameSpeed;
 
-        if (transform.position.y <= -10f) //vllt andere höhe später
+        if (transform.position.y <= -10f) // vllt andere Höhe später
         {
             Debug.Log("Hit: Missed (zu weit unten)");
-
             Destroy(gameObject);
         }
     }
 
     void OnTriggerStay2D(Collider2D other)
     {   
-        if (_collected) return;
+        if (_collected || fruitData == null) return;
 
         //----------------------------------------------------
         // Track which required keys are currently held
         //----------------------------------------------------
         _pressedThisFrame.Clear();
-        foreach (var key in requiredKeys)
+        foreach (var key in fruitData.requiredKeys)
             if (Input.GetKey(key))
                 _pressedThisFrame.Add(key);
-
 
         //----------------------------------------------------
         // Check if ALL required keys were pressed this frame
         //----------------------------------------------------
-        if (requiredKeys.Count > 0 && _pressedThisFrame.Count == requiredKeys.Count)
+        if (fruitData.requiredKeys.Count > 0 && _pressedThisFrame.Count == fruitData.requiredKeys.Count)
         {   
             CircleCollider2D cc = other.GetComponent<CircleCollider2D>();
-            float center = other.gameObject.transform.position.y + cc.transform.TransformPoint(cc.offset).y;
-
-            float radius = cc.radius;
-            TryToCollect(center, radius);
+            if (cc != null)
+            {
+                float center = cc.transform.TransformPoint(cc.offset).y;
+                float radius = cc.radius;
+                TryToCollect(center, radius);
+            }
         }
     }
 
@@ -65,30 +65,40 @@ public class Fruit : MonoBehaviour
         HitType hit = GameManager.instance.CalculateHit(transform, center, radius);
             
         _collected = true;
-         Debug.Log("FRUIT: catched fruit : " + hit.ToString());
+        Debug.Log($"FRUIT ({fruitData.fruitName}): catched fruit : " + hit.ToString());
 
-        // Punkte basierend auf HitType bestimmen
+      
         float addedScore = 0f;
         switch (hit)
         {
             case HitType.Perfect:
-                addedScore = perfectScore;
+                addedScore = fruitData.perfectScore;
                 break;
             case HitType.Okey:
-                addedScore = okeyScore;
+                addedScore = fruitData.okeyScore;
                 break;
             case HitType.Normal:
-                addedScore = normalScore;
+                addedScore = fruitData.normalScore;
                 break;
         }
 
-        // Score beim Player aufaddieren
+        
         if (GameManager.instance != null && GameManager.instance.player != null)
         {
             GameManager.instance.player.score += addedScore;
         }
 
-        // Frucht zerstören, damit sie nicht mehrfach getroffenen werden kann
+        
         Destroy(gameObject);
     } 
+
+    
+    public void SetFruitData(FruitData newData)
+    {
+        fruitData = newData;
+        if (spriteRenderer != null && fruitData != null && fruitData.fruitSprite != null)
+        {
+            spriteRenderer.sprite = fruitData.fruitSprite;
+        }
+    }
 }
