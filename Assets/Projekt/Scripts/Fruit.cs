@@ -32,20 +32,6 @@ public class Fruit : MonoBehaviour
         timeALife += Time.deltaTime * 1000;
     }
 
-    public void CollectFruit()
-    {               
-        Debug.Log($"FRUIT ({fruitData.fruitName}): catched fruit : ");
-        
-        GameManager.instance.fruits.Remove(this);
-        Destroy(gameObject);
-    } 
-
-    public void MissFruit()
-    {
-        // Miss penalty
-        GameManager.instance.fruits.Remove(this);
-        Destroy(gameObject);
-    }
 
     public void SetFruitData(FruitData newData)
     {

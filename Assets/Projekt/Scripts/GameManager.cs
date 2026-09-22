@@ -10,7 +10,7 @@ public enum FruitState
 }
 public enum HitType
 {
-    Normal, Okey, Perfect
+    OffTiming, Missed, Normal, Okey, Perfect
 }
 
 
@@ -28,7 +28,7 @@ public class GameManager : MonoBehaviour
     public Player player;
 
     [SerializeField] Transform normalField;
-    [SerializeField] Transform goodField;
+    [SerializeField] Transform okeyField;
     [SerializeField] Transform perfectField;
     [SerializeField] Transform missedField;
 
@@ -56,8 +56,20 @@ public class GameManager : MonoBehaviour
 
     public HitType CalculateHit(Fruit fruit)
     {   
-        // SCORE CALCULATION
-        return HitType.Okey;
+        if (
+            fruit.transform.position.y < normalField.transform.position.y + (normalField.transform.localScale.y / 2) &&
+            fruit.transform.position.y > normalField.transform.position.y - (normalField.transform.localScale.y / 2))
+            return HitType.Normal;
+        if (
+            fruit.transform.position.y < okeyField.transform.position.y + (okeyField.transform.localScale.y / 2) &&
+            fruit.transform.position.y > okeyField.transform.position.y - (okeyField.transform.localScale.y / 2))
+            return HitType.Okey;
+        if (
+            fruit.transform.position.y < perfectField.transform.position.y + (perfectField.transform.localScale.y / 2) &&
+            fruit.transform.position.y > perfectField.transform.position.y - (perfectField.transform.localScale.y / 2))
+            return HitType.Perfect;
+        
+        return HitType.Missed;
 
         //------------------------------------------------------------------------------------
         // So früher der Spieler die Fruit einsammel, nachdem sie im radius ist desto höher der score

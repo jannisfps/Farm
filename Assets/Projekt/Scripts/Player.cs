@@ -28,15 +28,14 @@ public class Player : MonoBehaviour
         GameManager.instance.player = this;
 
         isHitting = false;
-        currentField = GameManager.instance.sv.fieldstartingNumber;
-
     }
 
     void Update()
     {   
         if(GameManager.instance.fruits.Count == 0) return;
         
-        fruit = GameManager.instance.fruits[0];
+        if(fruit == null) GetFruit();
+        if(fruit == null) return;
 
         _pressedThisFrame.Clear();
         foreach(KeyCode key in fruit.fruitData.requiredKeys)
@@ -50,25 +49,57 @@ public class Player : MonoBehaviour
         if (_pressedThisFrame.Count == 0) return;
         
         isHitting = true;
-        StartCoroutine(Hitting());
+        StartCoroutine(Hitting(GameManager.instance.sv.hitCooldown));
         
         if (_pressedThisFrame.Count == fruit.fruitData.requiredKeys.Count)
-        {
-            score += AddScore(GameManager.instance.CalculateHit(fruit));
-
-            fruit.CollectFruit();
+        {   
+            HitType hit = GameManager.instance.CalculateHit(fruit);
+            
+            score += AddScore(fruit, hit);
+            CollectFruit();
             
         
-            //fruit.MissFruit();
+            //MissFruit();
         }
             
 
-        healthText.text = "HEALTH: " + health;
+        //healthText.text = "HEALTH: " + health;
         scoreText.text = "SCORE: " + score;
     }
 
-    public float AddScore(HitType type)
+    public void CollectFruit()
+    {               
+        //Debug.Log($"FRUIT ({fruit.fruitData.fruitName}): catched fruit : ");
+        
+        
+        GameManager.instance.fruits.Remove(fruit);
+        Destroy(fruit.gameObject);
+    } 
+
+    public void MissFruit()
     {
+        //-------------------------------
+        // Miss penalty for missClick
+        //-------------------------------
+
+        isHitting = true;
+        StartCoroutine(Hitting(GameManager.instance.sv.penaltyCooldown));
+        
+        //-------------------------------
+
+        GameManager.instance.fruits.Remove(fruit);
+        Destroy(fruit.gameObject);
+    }
+
+    public float AddScore(Fruit fruit, HitType type)
+    {
+        switch (type) 
+        {
+            case HitType.Missed: return -GameManager.instance.sv.missFruitCost;
+            case HitType.Normal: return fruit.fruitData.normalScore;
+            case HitType.Okey: return fruit.fruitData.okeyScore;
+            case HitType.Perfect: return fruit.fruitData.perfectScore;
+        }
         return 0;
     }
 
@@ -82,23 +113,50 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void Move(int direction)
-    {   
-        int max = GameManager.instance.sv.fieldstartingNumber;
-        currentField = Mathf.Clamp(
-            currentField += 1 * direction, max, -max);
-        transform.position = new Vector3(currentField, transform.position.y, 0);
+    private void GetFruit() 
+    {
+        if (GameManager.instance.fruits == null || 
+            GameManager.instance.fruits.Count == 0 || 
+            GameManager.instance.fruits[0] == null) 
+        {
+            fruit = null;
+            return;
+        }
+
+        fruit = GameManager.instance.fruits[0];
+
+        
+        GameObject visualHighlight = new GameObject("FruitHighlight");
+        
+        visualHighlight.transform.position = fruit.transform.position;
+        visualHighlight.transform.rotation = fruit.transform.rotation;
+        
+        visualHighlight.transform.SetParent(fruit.transform);
+        visualHighlight.transform.localScale = new Vector3(1.1f, 1.1f, 1.1f);
+
+
+        SpriteRenderer sr = visualHighlight.AddComponent<SpriteRenderer>();
+        
+
+        if (fruit.TryGetComponent<SpriteRenderer>(out SpriteRenderer targetSR))
+        {
+            sr.sprite = targetSR.sprite;
+        }
+        
+
+        sr.color = Color.green;
+        sr.sortingOrder = 98;
     }
 
-    IEnumerator Hitting()
+    private IEnumerator Hitting(float hitCooldown)
     {
         UpdateHitColor();
-        yield return new WaitForSeconds(GameManager.instance.sv.hitCooldown);
+        yield return new WaitForSeconds(hitCooldown);
         isHitting = false;
         UpdateHitColor();
     }
 
-    public void UpdateHitColor()
+    private void UpdateHitColor()
     {
         if (isHitting)
             sprite.color = Color.blue;
