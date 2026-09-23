@@ -5,20 +5,33 @@ using UnityEngine;
 public class Spawner2D : MonoBehaviour
 {
     [Header("Einstellungen")]
-    public List<GameObject> prefabsToSpawn = new List<GameObject>();
+    public GameObject fruitPrefab;
     public int countPerSpawn = 1;
     public float radius = 2f;
     public float spawnInterval = 3f;
-    public float destroyDelay = 10f;
+
+    [Header("Früchte-Freischaltung")]
+    public FruitData startingFruit;
+    public List<FruitData> upcomingFruits = new List<FruitData>();
+    public float unlockInterval = 15f;
 
     [Header("Optionen")]
     public bool spawnOnStart = true;
 
+    private List<FruitData> activeFruits = new List<FruitData>();
+    private int nextFruitIndex = 0;
+
     private void Start()
     {
+        if (startingFruit != null)
+        {
+            activeFruits.Add(startingFruit);
+        }
+
         if (spawnOnStart)
         {
             StartCoroutine(SpawnRoutine());
+            StartCoroutine(UnlockRoutine());
         }
     }
 
@@ -31,17 +44,35 @@ public class Spawner2D : MonoBehaviour
         }
     }
 
+    private IEnumerator UnlockRoutine()
+    {
+        while (nextFruitIndex < upcomingFruits.Count)
+        {
+            yield return new WaitForSeconds(unlockInterval);
+
+            FruitData nextFruit = upcomingFruits[nextFruitIndex];
+            activeFruits.Add(nextFruit);
+
+            nextFruitIndex++;
+        }
+    }
+
     public void SpawnAll()
     {
+        if (activeFruits.Count == 0 || fruitPrefab == null) return;
+
         for (int i = 0; i < countPerSpawn; i++)
         {
             Vector2 randomPosition = GetRandomPositionInRadius();
 
-            if (prefabsToSpawn.Count != 0)
-            {   
-                int rdm = Random.Range(0, prefabsToSpawn.Count);
-                GameObject spawnedObject = Instantiate(prefabsToSpawn[rdm], randomPosition, Quaternion.identity);
-                Destroy(spawnedObject, destroyDelay);
+            GameObject spawnedObject = Instantiate(fruitPrefab, randomPosition, Quaternion.identity);
+
+            FruitData randomData = activeFruits[Random.Range(0, activeFruits.Count)];
+
+            Fruit fruitComponent = spawnedObject.GetComponent<Fruit>();
+            if (fruitComponent != null)
+            {
+                fruitComponent.SetFruitData(randomData);
             }
         }
     }

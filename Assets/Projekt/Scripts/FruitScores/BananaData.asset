@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BananaData
   m_EditorClassIdentifier: 
   fruitName: Banana
-  fruitSprite: {fileID: 0}
+  fruitSprite: {fileID: 7526503779445282402, guid: 47bab2b4621cfe646be7d95056c54210, type: 3}
   requiredKeys: 12010000
   perfectScore: 100
   okeyScore: 50
