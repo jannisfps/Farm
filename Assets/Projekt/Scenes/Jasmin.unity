@@ -324,7 +324,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee1834f598872514daa48555fa36d9d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthText: {fileID: 534160077}
+  healthHearts: []
   scoreText: {fileID: 1110162120}
   score: 0
 --- !u!136 &443049285
@@ -1406,11 +1406,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a011e8f85d73ba8478441090a5f97aab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefabToSpawn: {fileID: 3940996377739341909, guid: 52a9e57512661484592c052c29e43def, type: 3}
-  countPerSpawn: 1
-  radius: 5.47
+  fruitPrefab: {fileID: 0}
   spawnInterval: 3
-  destroyDelay: 10
+  radius: 5.47
+  countPerSpawn: 1
+  speedIncreaseInterval: 10
+  spawnIntervalDecrease: 0.1
+  minSpawnInterval: 0.5
+  startingFruit: {fileID: 0}
+  upcomingFruits: []
+  unlockInterval: 15
   spawnOnStart: 1
 --- !u!1001 &2400342778854797166
 PrefabInstance:
