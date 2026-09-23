@@ -124,8 +124,16 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6753598406098941644, guid: 14a961ad627c8c04fb6c0875218c9901, type: 3}
+      propertyPath: m_SortingLayer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6753598406098941644, guid: 14a961ad627c8c04fb6c0875218c9901, type: 3}
       propertyPath: m_SortingOrder
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6753598406098941644, guid: 14a961ad627c8c04fb6c0875218c9901, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 636703505
       objectReference: {fileID: 0}
     - target: {fileID: 7159917655543493880, guid: 14a961ad627c8c04fb6c0875218c9901, type: 3}
       propertyPath: m_Name
