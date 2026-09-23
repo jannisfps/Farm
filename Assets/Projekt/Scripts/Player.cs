@@ -4,6 +4,7 @@ using TMPro;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 
 public class Player : MonoBehaviour
 {   
@@ -17,6 +18,8 @@ public class Player : MonoBehaviour
     private HashSet<KeyCode> _pressedThisFrame = new HashSet<KeyCode>();
     
     public int health {get; private set;}
+
+    private GameObject visualHighlight;
 
     void Awake()
     {   
@@ -36,9 +39,24 @@ public class Player : MonoBehaviour
 
     void Update()
     {   
+        if (GameManager.instance.currentState == GameState.GameOver) return;
         if(GameManager.instance.fruits.Count == 0) return;
         
-        if(fruit == null) GetFruit();
+        if(fruit == null) GetFruit(0);
+        if(fruit == null) return;
+
+        if (Input.GetKeyDown(GameManager.instance.sv.fruitUp) && GameManager.instance.fruits.Count > GameManager.instance.fruits.IndexOf(fruit))
+        {   
+            int index = GameManager.instance.fruits.IndexOf(fruit);
+            GetFruit(index + 1);
+        }
+
+        if (Input.GetKeyDown(GameManager.instance.sv.fruitDown) && GameManager.instance.fruits.IndexOf(fruit) != 0)
+        {   
+            int index = GameManager.instance.fruits.IndexOf(fruit);
+            GetFruit(index - 1);
+        }
+
         if(fruit == null) return;
 
         _pressedThisFrame.Clear();
@@ -126,19 +144,21 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void GetFruit() 
+    private void GetFruit(int index) 
     {
         if (GameManager.instance.fruits == null || 
-            GameManager.instance.fruits.Count == 0 || 
-            GameManager.instance.fruits[0] == null) 
+            GameManager.instance.fruits.Count == index || 
+            GameManager.instance.fruits[index] == null) 
         {
             fruit = null;
             return;
         }
 
-        fruit = GameManager.instance.fruits[0];
+        if (visualHighlight != null) Destroy(visualHighlight);
 
-        GameObject visualHighlight = new GameObject("FruitHighlight");
+        fruit = GameManager.instance.fruits[index];
+
+        visualHighlight = new GameObject("FruitHighlight");
         
         visualHighlight.transform.position = fruit.transform.position;
         visualHighlight.transform.rotation = fruit.transform.rotation;
@@ -176,5 +196,6 @@ public class Player : MonoBehaviour
     public void GameOver()
     {
         HighScore.instance.AddNewHighScore(GameManager.instance.currentName, (int)score); 
+        GameManager.instance.TriggerGameOver();
     }
 }

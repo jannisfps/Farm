@@ -10,7 +10,7 @@ public class Fruit : MonoBehaviour
     private Rigidbody2D rb;
     private SpriteRenderer spriteRenderer;
 
-    public float timeALife {get; private set;}
+    public bool isRotten = false;
 
     void Start()
     {
@@ -31,9 +31,8 @@ public class Fruit : MonoBehaviour
         rb.linearVelocityY = -GameManager.instance.GameSpeed;
         
         if (
-            transform.position.y < GameManager.instance.missedField.transform.position.y + (GameManager.instance.missedField.transform.localScale.y / 2) &&
-            transform.position.y > GameManager.instance.missedField.transform.position.y - (GameManager.instance.missedField.transform.localScale.y / 2))
-            GameManager.instance.player.MissFruit();
+            transform.position.y < GameManager.instance.missedField.transform.position.y - (GameManager.instance.missedField.transform.localScale.y / 2))
+                GameManager.instance.player.MissFruit();
     }
 
 
@@ -43,6 +42,15 @@ public class Fruit : MonoBehaviour
         if (spriteRenderer != null && fruitData != null && fruitData.fruitSprite != null)
         {
             spriteRenderer.sprite = fruitData.fruitSprite;
+        }
+
+        // Rott the fuit
+        float random = Random.value;
+        if (random <= GameManager.instance.sv.rottenChance / 100) isRotten = true;
+        
+        if (spriteRenderer != null && fruitData != null && fruitData.fruitSprite != null)
+        {
+            if (isRotten) spriteRenderer.sprite = fruitData.rottenSprite;
         }
     }
 }

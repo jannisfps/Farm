@@ -7,6 +7,7 @@ public class FruitData : ScriptableObject
     [Header("Visuals & Info")]
     public string fruitName = "Fruit";
     public Sprite fruitSprite;
+    public Sprite rottenSprite;
 
     [Header("Input Settings")]
     public List<KeyCode> requiredKeys = new List<KeyCode>();

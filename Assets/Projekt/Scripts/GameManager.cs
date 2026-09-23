@@ -69,11 +69,22 @@ public class GameManager : MonoBehaviour
         }
 
         Time.timeScale = 0f; // Stoppt Zeit und Physik komplett
+
+        StartRound();
     }
 
     IEnumerator StartRound()
     {
         yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Space));
+
+        currentState = GameState.Playing;
+
+        if (gameOverCanvas != null)
+        {
+            gameOverCanvas.SetActive(false);
+        }
+
+        Time.timeScale = 1f; // Stoppt Zeit und Physik komplett
     }
 
     public HitType CalculateHit(Fruit fruit)
