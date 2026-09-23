@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 public class Player : MonoBehaviour
 {   
-    public TMP_Text[] healthTexts;
+    public GameObject[] healthHearts; 
     public TMP_Text scoreText;
     public float score = 0;
 
@@ -26,6 +26,12 @@ public class Player : MonoBehaviour
         GameManager.instance.player = this;
 
         isHitting = false;
+    }
+
+    void Start()
+    {
+        
+        GainHealth(0); 
     }
 
     void Update()
@@ -102,15 +108,17 @@ public class Player : MonoBehaviour
             GameOver();
         }
 
-        for (int i = 0; i < healthTexts.Length; i++)
+        for (int i = 0; i < healthHearts.Length; i++)
         {
+            if (healthHearts[i] == null) continue;
+
             if (i < health)
             {
-                healthTexts[i].transform.GetChild(1).gameObject.SetActive(true);
+                healthHearts[i].transform.GetChild(1).gameObject.SetActive(true);
             } 
             else 
             {
-                healthTexts[i].transform.GetChild(1).gameObject.SetActive(false);
+                healthHearts[i].transform.GetChild(1).gameObject.SetActive(false);
             }
         }
     }
