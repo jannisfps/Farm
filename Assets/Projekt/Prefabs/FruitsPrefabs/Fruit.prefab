@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1959972660664658006}
   - component: {fileID: 1391628871299909340}
   m_Layer: 0
-  m_Name: AppleT
+  m_Name: Fruit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

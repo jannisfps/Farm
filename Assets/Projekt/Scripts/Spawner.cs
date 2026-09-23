@@ -4,21 +4,62 @@ using UnityEngine;
 
 public class Spawner2D : MonoBehaviour
 {
-    [Header("Einstellungen")]
-    public List<GameObject> prefabsToSpawn = new List<GameObject>();
-    public int countPerSpawn = 1;
-    public float radius = 2f;
-    public float spawnInterval = 3f;
-    public float destroyDelay = 10f;
+    [Header("--- 1. BASIS EINSTELLUNGEN ---")]
+    [Tooltip("Das Haupt-Prefab für alle Früchte.")]
+    public GameObject fruitPrefab;
 
-    [Header("Optionen")]
+    [Tooltip("Start-Pause zwischen zwei Spawns (in Sekunden).")]
+    public float spawnInterval = 3f;
+
+    [Tooltip("Breite des Spawn-Bereichs nach links und rechts (X-Achse).")]
+    public float radius = 2f;
+
+    [Tooltip("Wie viele Früchte gleichzeitig pro Spawn erzeugt werden.")]
+    public int countPerSpawn = 1;
+
+
+    [Header("--- 2. SPAWN-BESCHLEUNIGUNG ---")]
+    [Tooltip("Alle wie vielen Sekunden wird das Spawnen schneller?")]
+    public float speedIncreaseInterval = 10f;
+
+    [Tooltip("Um wie viele Sekunden wird die Spawn-Pause jeweils verkürzt?")]
+    public float spawnIntervalDecrease = 0.1f;
+
+    [Tooltip("Sicherheitsgrenze: Schneller als diesen Wert (in Sek.) wird nicht gespawnt.")]
+    public float minSpawnInterval = 0.5f;
+
+
+    [Header("--- 3. FRUCHT-PROGRESSION ---")]
+    [Tooltip("Die erste Frucht, die direkt ab Start spawnt (z. B. Apfel).")]
+    public FruitData startingFruit;
+
+    [Tooltip("Liste der nächsten Früchte. Werden nacheinander freigeschaltet.")]
+    public List<FruitData> upcomingFruits = new List<FruitData>();
+
+    [Tooltip("Alle wie vielen Sekunden wird die nächste Frucht aus der Liste freigeschaltet?")]
+    public float unlockInterval = 15f;
+
+
+    [Header("--- 4. OPTIONEN ---")]
+    [Tooltip("Soll das Spawnen automatisch direkt bei Spielstart beginnen?")]
     public bool spawnOnStart = true;
+
+
+    private List<FruitData> activeFruits = new List<FruitData>();
+    private int nextFruitIndex = 0;
 
     private void Start()
     {
+        if (startingFruit != null)
+        {
+            activeFruits.Add(startingFruit);
+        }
+
         if (spawnOnStart)
         {
             StartCoroutine(SpawnRoutine());
+            StartCoroutine(UnlockRoutine());
+            StartCoroutine(SpeedUpRoutine());
         }
     }
 
@@ -31,17 +72,44 @@ public class Spawner2D : MonoBehaviour
         }
     }
 
+    private IEnumerator UnlockRoutine()
+    {
+        while (nextFruitIndex < upcomingFruits.Count)
+        {
+            yield return new WaitForSeconds(unlockInterval);
+
+            FruitData nextFruit = upcomingFruits[nextFruitIndex];
+            activeFruits.Add(nextFruit);
+
+            nextFruitIndex++;
+        }
+    }
+
+    private IEnumerator SpeedUpRoutine()
+    {
+        while (spawnInterval > minSpawnInterval)
+        {
+            yield return new WaitForSeconds(speedIncreaseInterval);
+            spawnInterval = Mathf.Max(spawnInterval - spawnIntervalDecrease, minSpawnInterval);
+        }
+    }
+
     public void SpawnAll()
     {
+        if (activeFruits.Count == 0 || fruitPrefab == null) return;
+
         for (int i = 0; i < countPerSpawn; i++)
         {
             Vector2 randomPosition = GetRandomPositionInRadius();
 
-            if (prefabsToSpawn.Count != 0)
-            {   
-                int rdm = Random.Range(0, prefabsToSpawn.Count);
-                GameObject spawnedObject = Instantiate(prefabsToSpawn[rdm], randomPosition, Quaternion.identity);
-                Destroy(spawnedObject, destroyDelay);
+            GameObject spawnedObject = Instantiate(fruitPrefab, randomPosition, Quaternion.identity);
+
+            FruitData randomData = activeFruits[Random.Range(0, activeFruits.Count)];
+
+            Fruit fruitComponent = spawnedObject.GetComponent<Fruit>();
+            if (fruitComponent != null)
+            {
+                fruitComponent.SetFruitData(randomData);
             }
         }
     }

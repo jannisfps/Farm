@@ -7,14 +7,12 @@ using System.Collections.Generic;
 
 public class Player : MonoBehaviour
 {   
-    public TMP_Text healthText;
+    public GameObject[] healthHearts; 
     public TMP_Text scoreText;
     public float score = 0;
 
-
     private bool isHitting;
     private SpriteRenderer sprite;
-    private int currentField;
     private Fruit fruit;
     private HashSet<KeyCode> _pressedThisFrame = new HashSet<KeyCode>();
     
@@ -28,6 +26,12 @@ public class Player : MonoBehaviour
         GameManager.instance.player = this;
 
         isHitting = false;
+    }
+
+    void Start()
+    {
+       
+        GainHealth(0); 
     }
 
     void Update()
@@ -53,39 +57,34 @@ public class Player : MonoBehaviour
         
         if (_pressedThisFrame.Count == fruit.fruitData.requiredKeys.Count)
         {   
-            HitType hit = GameManager.instance.CalculateHit(fruit);
-            
-            score += AddScore(fruit, hit);
-            CollectFruit();
-            
-        
-            //MissFruit();
-        }
-            
+            if (fruit.isRotten)
+            {
+                GainHealth(-1);
+            }
+            else
+            {
+                HitType hit = GameManager.instance.CalculateHit(fruit);
+                score += AddScore(fruit, hit);
+            }
 
-        //healthText.text = "HEALTH: " + health;
+            CollectFruit();
+        }
+
         scoreText.text = "SCORE: " + score;
     }
 
     public void CollectFruit()
-    {               
-        //Debug.Log($"FRUIT ({fruit.fruitData.fruitName}): catched fruit : ");
-        
-        
+    {   
         GameManager.instance.fruits.Remove(fruit);
         Destroy(fruit.gameObject);
     } 
 
     public void MissFruit()
     {
-        //-------------------------------
-        // Miss penalty for missClick
-        //-------------------------------
-
-        isHitting = true;
-        StartCoroutine(Hitting(GameManager.instance.sv.penaltyCooldown));
-        
-        //-------------------------------
+        if (fruit != null && !fruit.isRotten)
+        {
+            GainHealth(-1);
+        }
 
         GameManager.instance.fruits.Remove(fruit);
         Destroy(fruit.gameObject);
@@ -105,11 +104,25 @@ public class Player : MonoBehaviour
 
     public void GainHealth(int amount)
     {
-        health += amount;
+        health = Mathf.Clamp(health + amount, 0, GameManager.instance.sv.health);
 
         if (health <= 0)
         {
             GameOver();
+        }
+
+        for (int i = 0; i < healthHearts.Length; i++)
+        {
+            if (healthHearts[i] == null) continue;
+
+            if (i < health)
+            {
+                healthHearts[i].transform.GetChild(1).gameObject.SetActive(true);
+            } 
+            else 
+            {
+                healthHearts[i].transform.GetChild(1).gameObject.SetActive(false);
+            }
         }
     }
 
@@ -125,7 +138,6 @@ public class Player : MonoBehaviour
 
         fruit = GameManager.instance.fruits[0];
 
-        
         GameObject visualHighlight = new GameObject("FruitHighlight");
         
         visualHighlight.transform.position = fruit.transform.position;
@@ -134,15 +146,12 @@ public class Player : MonoBehaviour
         visualHighlight.transform.SetParent(fruit.transform);
         visualHighlight.transform.localScale = new Vector3(1.1f, 1.1f, 1.1f);
 
-
         SpriteRenderer sr = visualHighlight.AddComponent<SpriteRenderer>();
-        
 
         if (fruit.TryGetComponent<SpriteRenderer>(out SpriteRenderer targetSR))
         {
             sr.sprite = targetSR.sprite;
         }
-        
 
         sr.color = Color.green;
         sr.sortingOrder = 98;
@@ -166,8 +175,6 @@ public class Player : MonoBehaviour
 
     public void GameOver()
     {
-        // TODO
-        // + Other behavior
         HighScore.instance.AddNewHighScore(GameManager.instance.currentName, (int)score); 
     }
 }

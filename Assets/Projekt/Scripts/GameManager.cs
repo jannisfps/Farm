@@ -12,7 +12,10 @@ public enum HitType
 {
     OffTiming, Missed, Normal, Okey, Perfect
 }
-
+public enum GameState
+{
+    Playing, GameOver
+}
 
 [DefaultExecutionOrder(-99999)]
 public class GameManager : MonoBehaviour
@@ -22,15 +25,18 @@ public class GameManager : MonoBehaviour
     public string currentName = "Unknown";
     public List<Fruit> fruits = new List<Fruit>();
 
-
     public StartingValues sv;
     public float GameSpeed {get; private set;}
     public Player player;
 
+    [Header("UI & GameState")]
+    public GameObject gameOverCanvas;
+    public GameState currentState = GameState.Playing;
+
     [SerializeField] Transform normalField;
     [SerializeField] Transform okeyField;
     [SerializeField] Transform perfectField;
-    [SerializeField] Transform missedField;
+    [SerializeField] public Transform missedField;
 
     void Awake()
     {
@@ -42,11 +48,27 @@ public class GameManager : MonoBehaviour
         else Destroy(gameObject);
 
         GameSpeed = sv.startGameSpeed;
+        Time.timeScale = 1f; // Sicherstellen, dass das Spiel bei Start nicht pausiert ist
     }
 
     void Update()
     {
-        GameSpeed += sv.gameSpeedIncrease * Time.deltaTime;
+        if (currentState == GameState.Playing)
+        {
+            GameSpeed += sv.gameSpeedIncrease * Time.deltaTime;
+        }
+    }
+
+    public void TriggerGameOver()
+    {
+        currentState = GameState.GameOver;
+
+        if (gameOverCanvas != null)
+        {
+            gameOverCanvas.SetActive(true);
+        }
+
+        Time.timeScale = 0f; // Stoppt Zeit und Physik komplett
     }
 
     IEnumerator StartRound()
@@ -70,10 +92,5 @@ public class GameManager : MonoBehaviour
             return HitType.Perfect;
         
         return HitType.Missed;
-
-        //------------------------------------------------------------------------------------
-        // So früher der Spieler die Fruit einsammel, nachdem sie im radius ist desto höher der score
-        //------------------------------------------------------------------------------------
-        
     }
 }
