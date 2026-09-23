@@ -16,6 +16,6 @@ MonoBehaviour:
   fruitSprite: {fileID: -5670339388207800344, guid: 38994329d71d3e147806b9c4ef2d70e4, type: 3}
   rottenSprite: {fileID: 0}
   requiredKeys: 66000000
-  perfectScore: 45
+  perfectScore: 135
   okeyScore: 67
-  normalScore: 135
+  normalScore: 45

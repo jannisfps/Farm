@@ -71,9 +71,6 @@ public class Player : MonoBehaviour
 
         if (_pressedThisFrame.Count == 0) return;
         
-        isHitting = true;
-        StartCoroutine(Hitting(GameManager.instance.sv.hitCooldown));
-        
         if (_pressedThisFrame.Count == fruit.fruitData.requiredKeys.Count)
         {   
             if (fruit.isRotten)
@@ -84,10 +81,16 @@ public class Player : MonoBehaviour
             {
                 HitType hit = GameManager.instance.CalculateHit(fruit);
                 score = Mathf.Clamp(score + AddScore(fruit, hit), 0, 999999);
+                if (hit != HitType.Missed) Move(fruit);
             }
 
             CollectFruit();
         }
+       /* else
+        {
+            isHitting = true;
+            StartCoroutine(Hitting(GameManager.instance.sv.hitCooldown));
+        }*/
 
         scoreText.text = "SCORE: " + score;
     }
@@ -200,5 +203,11 @@ public class Player : MonoBehaviour
     {
         HighScore.instance.AddNewHighScore(GameManager.instance.currentName, (int)score); 
         GameManager.instance.TriggerGameOver();
+    }
+
+    private void Move(Fruit fruit)
+    {   
+        if (fruit == null) return;
+        transform.position = new Vector3(fruit.transform.position.x, transform.position.y, transform.position.z);
     }
 }
