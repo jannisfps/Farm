@@ -44,14 +44,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a011e8f85d73ba8478441090a5f97aab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fruitPrefab: {fileID: 0}
+  fruitPrefab: {fileID: 1788528543483068548, guid: 146705ef7400c564aafb858afdd9aeb8, type: 3}
   spawnInterval: 0.4
   radius: 3
   countPerSpawn: 1
   speedIncreaseInterval: 10
   spawnIntervalDecrease: 0.1
   minSpawnInterval: 0.5
-  startingFruit: {fileID: 0}
+  startingFruit: {fileID: 11400000, guid: cc1725e5c5e490e468ba5fb131e91a89, type: 2}
   upcomingFruits: []
   unlockInterval: 15
   spawnOnStart: 1
