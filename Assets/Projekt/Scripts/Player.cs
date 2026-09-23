@@ -7,14 +7,13 @@ using System.Collections.Generic;
 
 public class Player : MonoBehaviour
 {   
-    public TMP_Text healthText;
+    public TMP_Text[] healthTexts;
     public TMP_Text scoreText;
     public float score = 0;
 
 
     private bool isHitting;
     private SpriteRenderer sprite;
-    private int currentField;
     private Fruit fruit;
     private HashSet<KeyCode> _pressedThisFrame = new HashSet<KeyCode>();
     
@@ -22,6 +21,7 @@ public class Player : MonoBehaviour
 
     void Awake()
     {   
+        
         sprite = GetComponent<SpriteRenderer>();
 
         health = GameManager.instance.sv.health;
@@ -81,12 +81,12 @@ public class Player : MonoBehaviour
         //-------------------------------
         // Miss penalty for missClick
         //-------------------------------
-
+        GainHealth(-1);
         //isHitting = true;
         //StartCoroutine(Hitting(GameManager.instance.sv.penaltyCooldown));
         
         //-------------------------------
-        
+
         GameManager.instance.fruits.Remove(fruit);
         Destroy(fruit.gameObject);
     }
@@ -105,11 +105,19 @@ public class Player : MonoBehaviour
 
     public void GainHealth(int amount)
     {
-        health += amount;
+        health += Mathf.Clamp(health + amount, 0, GameManager.instance.sv.health);
 
         if (health <= 0)
         {
             GameOver();
+        }
+
+        for (int i = 0; i < healthTexts.Length; i++)
+        {
+            if (i <= health)
+            {
+                healthTexts[i].transform.GetChild(1).gameObject.SetActive(true);
+            } else healthTexts[i].transform.GetChild(1).gameObject.SetActive(false);
         }
     }
 
