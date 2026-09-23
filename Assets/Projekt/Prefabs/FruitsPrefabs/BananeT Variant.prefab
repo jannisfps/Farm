@@ -95,14 +95,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2445937036875315618, guid: 14a961ad627c8c04fb6c0875218c9901, type: 3}
-      propertyPath: m_Radius
-      value: 1.6683812
-      objectReference: {fileID: 0}
-    - target: {fileID: 2445937036875315618, guid: 14a961ad627c8c04fb6c0875218c9901, type: 3}
-      propertyPath: m_Offset.y
-      value: -0.016303701
-      objectReference: {fileID: 0}
     - target: {fileID: 3617310923906783789, guid: 14a961ad627c8c04fb6c0875218c9901, type: 3}
       propertyPath: requiredKeys.Array.size
       value: 2
@@ -111,10 +103,6 @@ PrefabInstance:
       propertyPath: 'requiredKeys.Array.data[1]'
       value: 274
       objectReference: {fileID: 0}
-    - target: {fileID: 6753598406098941644, guid: 14a961ad627c8c04fb6c0875218c9901, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 7381965769198725172, guid: 7944b9c24e8d64c4599f5c6224c5891b, type: 3}
     - target: {fileID: 6753598406098941644, guid: 14a961ad627c8c04fb6c0875218c9901, type: 3}
       propertyPath: m_Color.b
       value: 1
@@ -126,6 +114,10 @@ PrefabInstance:
     - target: {fileID: 6753598406098941644, guid: 14a961ad627c8c04fb6c0875218c9901, type: 3}
       propertyPath: m_Color.r
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6753598406098941644, guid: 14a961ad627c8c04fb6c0875218c9901, type: 3}
+      propertyPath: m_SortingOrder
+      value: 99
       objectReference: {fileID: 0}
     - target: {fileID: 7159917655543493880, guid: 14a961ad627c8c04fb6c0875218c9901, type: 3}
       propertyPath: m_Name

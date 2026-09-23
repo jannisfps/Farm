@@ -1,10 +1,11 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Spawner2D : MonoBehaviour
 {
     [Header("Einstellungen")]
-    public GameObject prefabToSpawn;
+    public List<GameObject> prefabsToSpawn = new List<GameObject>();
     public int countPerSpawn = 1;
     public float radius = 2f;
     public float spawnInterval = 3f;
@@ -36,9 +37,10 @@ public class Spawner2D : MonoBehaviour
         {
             Vector2 randomPosition = GetRandomPositionInRadius();
 
-            if (prefabToSpawn != null)
-            {
-                GameObject spawnedObject = Instantiate(prefabToSpawn, randomPosition, Quaternion.identity);
+            if (prefabsToSpawn.Count != 0)
+            {   
+                int rdm = Random.Range(0, prefabsToSpawn.Count);
+                GameObject spawnedObject = Instantiate(prefabsToSpawn[rdm], randomPosition, Quaternion.identity);
                 Destroy(spawnedObject, destroyDelay);
             }
         }
@@ -46,13 +48,7 @@ public class Spawner2D : MonoBehaviour
 
     public Vector2 GetRandomPositionInRadius()
     {
-        Vector2 randomPoint = Random.insideUnitCircle * radius;
-        return (Vector2)transform.position + randomPoint;
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, radius);
+        float randomPoint = Random.Range(-radius, radius);
+        return new Vector2(randomPoint, transform.position.y);
     }
 }
