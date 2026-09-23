@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fruitName: Fruit
   fruitSprite: {fileID: 0}
-  requiredKeys: 11010000
+  rottenSprite: {fileID: 0}
+  requiredKeys: 61000000
   perfectScore: 100
   okeyScore: 50
   normalScore: 25

@@ -1,3 +1,4 @@
+using Unity.Multiplayer.Center.Common;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "StartingValues", menuName = "Scriptable Objects/StartingValues")]
@@ -14,4 +15,12 @@ public class StartingValues : ScriptableObject
     public float penaltyCooldown = 0.5f;
     
     public int missFruitCost = 20;
+
+    
+    [Header("Fruit Rotten Change in % (0- 100)")]
+    public float rottenChance = 10;
+
+    [Header("Switch Fruit KeyBinds")]
+    public KeyCode fruitUp = KeyCode.UpArrow;
+    public KeyCode fruitDown = KeyCode.DownArrow;
 }

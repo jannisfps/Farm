@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startGameSpeed: 1
   gameSpeedIncrease: 0.1
-  perfectThreshold: 25
-  normalThreshold: 33
-  health: 3
+  health: 4
   hitCooldown: 0.05
-  fieldstartingNumber: -3
+  penaltyCooldown: 0.5
+  missFruitCost: 20
+  rottenChance: 10

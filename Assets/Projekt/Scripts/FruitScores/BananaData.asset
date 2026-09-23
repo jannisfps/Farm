@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fruitName: Banana
   fruitSprite: {fileID: 7526503779445282402, guid: 47bab2b4621cfe646be7d95056c54210, type: 3}
-  requiredKeys: 12010000
+  rottenSprite: {fileID: 0}
+  requiredKeys: 62000000
   perfectScore: 100
   okeyScore: 50
   normalScore: 25
