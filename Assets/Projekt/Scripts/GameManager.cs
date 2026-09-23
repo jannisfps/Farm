@@ -1,8 +1,7 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
-using System.Diagnostics;
-using System.Collections;
+using UnityEngine.SceneManagement; 
 
 public enum FruitState
 {
@@ -26,7 +25,7 @@ public class GameManager : MonoBehaviour
     public List<Fruit> fruits = new List<Fruit>();
 
     public StartingValues sv;
-    public float GameSpeed {get; private set;}
+    public float GameSpeed { get; private set; }
     public Player player;
 
     [Header("UI & GameState")]
@@ -45,10 +44,13 @@ public class GameManager : MonoBehaviour
             instance = this;
             DontDestroyOnLoad(gameObject);
         }
-        else Destroy(gameObject);
+        else 
+        {
+            Destroy(gameObject);
+            return;
+        }
 
-        GameSpeed = sv.startGameSpeed;
-        Time.timeScale = 1f; // Sicherstellen, dass das Spiel bei Start nicht pausiert ist
+        ResetGameValues();
     }
 
     void Update()
@@ -68,37 +70,49 @@ public class GameManager : MonoBehaviour
             gameOverCanvas.SetActive(true);
         }
 
-        Time.timeScale = 0f; // Stoppt Zeit und Physik komplett
+        Time.timeScale = 0f; 
 
-        StartRound();
+        
+        StartCoroutine(StartRound());
     }
 
     IEnumerator StartRound()
     {
-        yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Space));
-
-        currentState = GameState.Playing;
+       
+        while (!Input.GetKeyDown(KeyCode.Space))
+        {
+            yield return null;
+        }
 
         if (gameOverCanvas != null)
         {
             gameOverCanvas.SetActive(false);
         }
 
-        Time.timeScale = 1f; // Stoppt Zeit und Physik komplett
+        
+        ResetGameValues();
+
+        
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void ResetGameValues()
+    {
+        GameSpeed = sv.startGameSpeed;
+        currentState = GameState.Playing;
+        fruits.Clear();
+        Time.timeScale = 1f;
     }
 
     public HitType CalculateHit(Fruit fruit)
     {   
-        if (
-            fruit.transform.position.y < normalField.transform.position.y + (normalField.transform.localScale.y / 2) &&
+        if (fruit.transform.position.y < normalField.transform.position.y + (normalField.transform.localScale.y / 2) &&
             fruit.transform.position.y > normalField.transform.position.y - (normalField.transform.localScale.y / 2))
             return HitType.Normal;
-        if (
-            fruit.transform.position.y < okeyField.transform.position.y + (okeyField.transform.localScale.y / 2) &&
+        if (fruit.transform.position.y < okeyField.transform.position.y + (okeyField.transform.localScale.y / 2) &&
             fruit.transform.position.y > okeyField.transform.position.y - (okeyField.transform.localScale.y / 2))
             return HitType.Okey;
-        if (
-            fruit.transform.position.y < perfectField.transform.position.y + (perfectField.transform.localScale.y / 2) &&
+        if (fruit.transform.position.y < perfectField.transform.position.y + (perfectField.transform.localScale.y / 2) &&
             fruit.transform.position.y > perfectField.transform.position.y - (perfectField.transform.localScale.y / 2))
             return HitType.Perfect;
         
