@@ -4,19 +4,46 @@ using UnityEngine;
 
 public class Spawner2D : MonoBehaviour
 {
-    [Header("Einstellungen")]
+    [Header("--- 1. BASIS EINSTELLUNGEN ---")]
+    [Tooltip("Das Haupt-Prefab für alle Früchte.")]
     public GameObject fruitPrefab;
-    public int countPerSpawn = 1;
-    public float radius = 2f;
+
+    [Tooltip("Start-Pause zwischen zwei Spawns (in Sekunden).")]
     public float spawnInterval = 3f;
 
-    [Header("Früchte-Freischaltung")]
+    [Tooltip("Breite des Spawn-Bereichs nach links und rechts (X-Achse).")]
+    public float radius = 2f;
+
+    [Tooltip("Wie viele Früchte gleichzeitig pro Spawn erzeugt werden.")]
+    public int countPerSpawn = 1;
+
+
+    [Header("--- 2. SPAWN-BESCHLEUNIGUNG ---")]
+    [Tooltip("Alle wie vielen Sekunden wird das Spawnen schneller?")]
+    public float speedIncreaseInterval = 10f;
+
+    [Tooltip("Um wie viele Sekunden wird die Spawn-Pause jeweils verkürzt?")]
+    public float spawnIntervalDecrease = 0.1f;
+
+    [Tooltip("Sicherheitsgrenze: Schneller als diesen Wert (in Sek.) wird nicht gespawnt.")]
+    public float minSpawnInterval = 0.5f;
+
+
+    [Header("--- 3. FRUCHT-PROGRESSION ---")]
+    [Tooltip("Die erste Frucht, die direkt ab Start spawnt (z. B. Apfel).")]
     public FruitData startingFruit;
+
+    [Tooltip("Liste der nächsten Früchte. Werden nacheinander freigeschaltet.")]
     public List<FruitData> upcomingFruits = new List<FruitData>();
+
+    [Tooltip("Alle wie vielen Sekunden wird die nächste Frucht aus der Liste freigeschaltet?")]
     public float unlockInterval = 15f;
 
-    [Header("Optionen")]
+
+    [Header("--- 4. OPTIONEN ---")]
+    [Tooltip("Soll das Spawnen automatisch direkt bei Spielstart beginnen?")]
     public bool spawnOnStart = true;
+
 
     private List<FruitData> activeFruits = new List<FruitData>();
     private int nextFruitIndex = 0;
@@ -32,6 +59,7 @@ public class Spawner2D : MonoBehaviour
         {
             StartCoroutine(SpawnRoutine());
             StartCoroutine(UnlockRoutine());
+            StartCoroutine(SpeedUpRoutine());
         }
     }
 
@@ -54,6 +82,15 @@ public class Spawner2D : MonoBehaviour
             activeFruits.Add(nextFruit);
 
             nextFruitIndex++;
+        }
+    }
+
+    private IEnumerator SpeedUpRoutine()
+    {
+        while (spawnInterval > minSpawnInterval)
+        {
+            yield return new WaitForSeconds(speedIncreaseInterval);
+            spawnInterval = Mathf.Max(spawnInterval - spawnIntervalDecrease, minSpawnInterval);
         }
     }
 
