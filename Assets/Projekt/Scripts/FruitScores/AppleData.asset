@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: AppleData
   m_EditorClassIdentifier: 
   fruitName: Fruit
-  fruitSprite: {fileID: 0}
+  fruitSprite: {fileID: 7293598183456022363, guid: 3c3cab7eabeb9af46b1eddd6b9f9df9a, type: 3}
   rottenSprite: {fileID: 0}
   requiredKeys: 61000000
   perfectScore: 100

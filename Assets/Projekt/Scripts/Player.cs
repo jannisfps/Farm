@@ -20,6 +20,7 @@ public class Player : MonoBehaviour
     public int health {get; private set;}
 
     private GameObject visualHighlight;
+    public Material highlightMaterial;
 
     void Awake()
     {   
@@ -164,7 +165,7 @@ public class Player : MonoBehaviour
         visualHighlight.transform.rotation = fruit.transform.rotation;
         
         visualHighlight.transform.SetParent(fruit.transform);
-        visualHighlight.transform.localScale = new Vector3(1.1f, 1.1f, 1.1f);
+        visualHighlight.transform.localScale = new Vector3(1.05f, 1.05f, 1.05f);
 
         SpriteRenderer sr = visualHighlight.AddComponent<SpriteRenderer>();
 
@@ -173,6 +174,8 @@ public class Player : MonoBehaviour
             sr.sprite = targetSR.sprite;
         }
 
+
+        sr.material = highlightMaterial;
         sr.color = Color.green;
         sr.sortingOrder = 98;
     }
