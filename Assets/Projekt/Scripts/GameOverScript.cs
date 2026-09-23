@@ -26,9 +26,9 @@ if ( GameManager.instance.gameOverCanvas != null)
     {
        Application.Quit();
     }
-    public void Updategameover()
+    public void OnEnable()
     { 
-        if (highScoreText != null && HighScore.instance.highScores.Count != 0) highScoreText.text = "Highscore: " + HighScore.instance.highScores[0].Score;
+        if (highScoreText != null && HighScore.instance.highScores.Count != 0) highScoreText.text = "" + HighScore.instance.highScores[0].Score;
         score.text = ""+GameManager.instance.player.score; 
     }
     

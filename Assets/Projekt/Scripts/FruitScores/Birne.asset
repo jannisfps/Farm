@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f24d893ae358004499ab0c66a5f64f5a, type: 3}
-  m_Name: BananaData
+  m_Name: Birne
   m_EditorClassIdentifier: 
-  fruitName: Banana
-  fruitSprite: {fileID: 7381965769198725172, guid: 7944b9c24e8d64c4599f5c6224c5891b, type: 3}
+  fruitName: Birne
+  fruitSprite: {fileID: -5670339388207800344, guid: 38994329d71d3e147806b9c4ef2d70e4, type: 3}
   rottenSprite: {fileID: 0}
-  requiredKeys: 68000000
-  perfectScore: 80
-  okeyScore: 120
-  normalScore: 240
+  requiredKeys: 66000000
+  perfectScore: 45
+  okeyScore: 67
+  normalScore: 135

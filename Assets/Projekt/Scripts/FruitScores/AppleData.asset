@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f24d893ae358004499ab0c66a5f64f5a, type: 3}
   m_Name: AppleData
   m_EditorClassIdentifier: 
-  fruitName: Fruit
+  fruitName: Apple
   fruitSprite: {fileID: 7293598183456022363, guid: 3c3cab7eabeb9af46b1eddd6b9f9df9a, type: 3}
   rottenSprite: {fileID: 0}
   requiredKeys: 61000000
-  perfectScore: 100
-  okeyScore: 50
-  normalScore: 25
+  perfectScore: 45
+  okeyScore: 22
+  normalScore: 15

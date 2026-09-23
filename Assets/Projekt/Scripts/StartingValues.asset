@@ -18,4 +18,6 @@ MonoBehaviour:
   hitCooldown: 0.05
   penaltyCooldown: 0.5
   missFruitCost: 20
-  rottenChance: 10
+  rottenChance: 0
+  fruitUp: 273
+  fruitDown: 274

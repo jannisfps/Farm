@@ -83,7 +83,7 @@ public class Player : MonoBehaviour
             else
             {
                 HitType hit = GameManager.instance.CalculateHit(fruit);
-                score += AddScore(fruit, hit);
+                score = Mathf.Clamp(score + AddScore(fruit, hit), 0, 999999);
             }
 
             CollectFruit();
@@ -165,19 +165,19 @@ public class Player : MonoBehaviour
         visualHighlight.transform.rotation = fruit.transform.rotation;
         
         visualHighlight.transform.SetParent(fruit.transform);
-        visualHighlight.transform.localScale = new Vector3(1.05f, 1.05f, 1.05f);
+        visualHighlight.transform.localScale = new Vector3(1.1f, 1.1f, 1.1f);
 
         SpriteRenderer sr = visualHighlight.AddComponent<SpriteRenderer>();
 
         if (fruit.TryGetComponent<SpriteRenderer>(out SpriteRenderer targetSR))
         {
             sr.sprite = targetSR.sprite;
+            sr.material = highlightMaterial;
+            sr.color = Color.cyan;
+            sr.sortingLayerID = targetSR.sortingLayerID;
+            sr.sortingOrder = targetSR.sortingOrder - 1;
         }
 
-
-        sr.material = highlightMaterial;
-        sr.color = Color.green;
-        sr.sortingOrder = 98;
     }
 
     private IEnumerator Hitting(float hitCooldown)
