@@ -1,7 +1,5 @@
 using UnityEngine;
 using System.Collections.Generic;
-using Unity.VisualScripting;
-using System.Runtime.CompilerServices;
 
 public class Fruit : MonoBehaviour
 {   
@@ -11,30 +9,45 @@ public class Fruit : MonoBehaviour
     private SpriteRenderer spriteRenderer;
 
     public bool isRotten = false;
+    private bool _hasMissed = false;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
 
-        
         if (fruitData != null && fruitData.fruitSprite != null && spriteRenderer != null)
         {
             spriteRenderer.sprite = fruitData.fruitSprite;
         }
         
-        GameManager.instance.fruits.Add(this);
+        if (GameManager.instance != null)
+        {
+            GameManager.instance.fruits.Add(this);
+        }
     }
 
     void Update()
     {
+        if (GameManager.instance == null) return;
+
         rb.linearVelocityY = -GameManager.instance.GameSpeed;
         
-        if (
-            transform.position.y < GameManager.instance.missedField.transform.position.y - (GameManager.instance.missedField.transform.localScale.y / 2))
-                GameManager.instance.player.MissFruit();
+        
+        if (!_hasMissed && GameManager.instance.missedField != null)
+        {
+            float missedThreshold = GameManager.instance.missedField.transform.position.y - (GameManager.instance.missedField.transform.localScale.y / 2);
+            
+            if (transform.position.y < missedThreshold)
+            {
+                _hasMissed = true;
+                if (GameManager.instance.player != null)
+                {
+                    GameManager.instance.player.MissFruit();
+                }
+            }
+        }
     }
-
 
     public void SetFruitData(FruitData newData)
     {
@@ -44,13 +57,19 @@ public class Fruit : MonoBehaviour
             spriteRenderer.sprite = fruitData.fruitSprite;
         }
 
-        // Rott the fuit
-        float random = Random.value;
-        if (random <= GameManager.instance.sv.rottenChance / 100) isRotten = true;
         
-        if (spriteRenderer != null && fruitData != null && fruitData.fruitSprite != null)
+        if (GameManager.instance != null && GameManager.instance.sv != null)
         {
-            if (isRotten) spriteRenderer.sprite = fruitData.rottenSprite;
+            float random = Random.value;
+            if (random <= GameManager.instance.sv.rottenChance / 100f) 
+            {
+                isRotten = true;
+            }
+            
+            if (spriteRenderer != null && fruitData != null && isRotten && fruitData.rottenSprite != null)
+            {
+                spriteRenderer.sprite = fruitData.rottenSprite;
+            }
         }
     }
 }

@@ -39,16 +39,8 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else 
-        {
-            Destroy(gameObject);
-            return;
-        }
+        
+        instance = this;
 
         ResetGameValues();
     }
@@ -72,13 +64,11 @@ public class GameManager : MonoBehaviour
 
         Time.timeScale = 0f; 
 
-        
         StartCoroutine(StartRound());
     }
 
     IEnumerator StartRound()
     {
-       
         while (!Input.GetKeyDown(KeyCode.Space))
         {
             yield return null;
@@ -89,10 +79,8 @@ public class GameManager : MonoBehaviour
             gameOverCanvas.SetActive(false);
         }
 
-        
         ResetGameValues();
 
-        
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
@@ -106,13 +94,18 @@ public class GameManager : MonoBehaviour
 
     public HitType CalculateHit(Fruit fruit)
     {   
-        if (fruit.transform.position.y < normalField.transform.position.y + (normalField.transform.localScale.y / 2) &&
+        if (normalField != null &&
+            fruit.transform.position.y < normalField.transform.position.y + (normalField.transform.localScale.y / 2) &&
             fruit.transform.position.y > normalField.transform.position.y - (normalField.transform.localScale.y / 2))
             return HitType.Normal;
-        if (fruit.transform.position.y < okeyField.transform.position.y + (okeyField.transform.localScale.y / 2) &&
+
+        if (okeyField != null &&
+            fruit.transform.position.y < okeyField.transform.position.y + (okeyField.transform.localScale.y / 2) &&
             fruit.transform.position.y > okeyField.transform.position.y - (okeyField.transform.localScale.y / 2))
             return HitType.Okey;
-        if (fruit.transform.position.y < perfectField.transform.position.y + (perfectField.transform.localScale.y / 2) &&
+
+        if (perfectField != null &&
+            fruit.transform.position.y < perfectField.transform.position.y + (perfectField.transform.localScale.y / 2) &&
             fruit.transform.position.y > perfectField.transform.position.y - (perfectField.transform.localScale.y / 2))
             return HitType.Perfect;
         
