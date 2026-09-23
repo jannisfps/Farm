@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] Transform normalField;
     [SerializeField] Transform okeyField;
     [SerializeField] Transform perfectField;
-    [SerializeField] Transform missedField;
+    [SerializeField] public Transform missedField;
 
     void Awake()
     {

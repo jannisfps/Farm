@@ -29,7 +29,11 @@ public class Fruit : MonoBehaviour
     void Update()
     {
         rb.linearVelocityY = -GameManager.instance.GameSpeed;
-        timeALife += Time.deltaTime * 1000;
+        
+        if (
+            transform.position.y < GameManager.instance.missedField.transform.position.y + (GameManager.instance.missedField.transform.localScale.y / 2) &&
+            transform.position.y > GameManager.instance.missedField.transform.position.y - (GameManager.instance.missedField.transform.localScale.y / 2))
+            GameManager.instance.player.MissFruit();
     }
 
 

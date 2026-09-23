@@ -82,11 +82,11 @@ public class Player : MonoBehaviour
         // Miss penalty for missClick
         //-------------------------------
 
-        isHitting = true;
-        StartCoroutine(Hitting(GameManager.instance.sv.penaltyCooldown));
+        //isHitting = true;
+        //StartCoroutine(Hitting(GameManager.instance.sv.penaltyCooldown));
         
         //-------------------------------
-
+        
         GameManager.instance.fruits.Remove(fruit);
         Destroy(fruit.gameObject);
     }
