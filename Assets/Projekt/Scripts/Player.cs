@@ -30,7 +30,7 @@ public class Player : MonoBehaviour
 
     void Start()
     {
-        
+       
         GainHealth(0); 
     }
 
@@ -81,7 +81,10 @@ public class Player : MonoBehaviour
 
     public void MissFruit()
     {
-        GainHealth(-1);
+        if (fruit != null && !fruit.isRotten)
+        {
+            GainHealth(-1);
+        }
 
         GameManager.instance.fruits.Remove(fruit);
         Destroy(fruit.gameObject);
