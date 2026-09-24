@@ -109,6 +109,11 @@ public class GameManager : MonoBehaviour
             fruit.transform.position.y > perfectField.transform.position.y - (perfectField.transform.localScale.y / 2))
             return HitType.Perfect;
         
-        return HitType.Missed;
+        if (missedField != null &&
+            fruit.transform.position.y < missedField.transform.position.y + (missedField.transform.localScale.y / 2) &&
+            fruit.transform.position.y > missedField.transform.position.y - (missedField.transform.localScale.y / 2))
+            return HitType.Missed;
+        
+        return HitType.OffTiming;
     }
 }

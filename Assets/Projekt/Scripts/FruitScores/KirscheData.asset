@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: KirscheData
   m_EditorClassIdentifier: 
   fruitName: Kirsche
-  fruitSprite: {fileID: -1435901459259225544, guid: e7743a0447fa3904d99f1a432b6eeaa2, type: 3}
+  fruitSprite: {fileID: -7272269728935113758, guid: 51972ea6172db804c9b7935b3710960e, type: 3}
   rottenSprite: {fileID: 0}
   requiredKeys: 64000000
   perfectScore: 100

@@ -5,8 +5,12 @@ public class Fruit : MonoBehaviour
 {   
     public FruitData fruitData;
 
+    public AudioClip catchSound;
+    public AudioClip missSound;
+
     private Rigidbody2D rb;
     private SpriteRenderer spriteRenderer;
+    private AudioSource audioSource;
 
     public bool isRotten = false;
     private bool _hasMissed = false;
@@ -15,6 +19,7 @@ public class Fruit : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        audioSource = GetComponent<AudioSource>();
 
         if (fruitData != null && fruitData.fruitSprite != null && spriteRenderer != null)
         {
@@ -72,4 +77,23 @@ public class Fruit : MonoBehaviour
             }
         }
     }
+
+        public void PlayMissedSound() 
+    {
+        if (missSound != null)
+        {
+            // Spielt den Sound an der aktuellen Position der Frucht ab
+            AudioSource.PlayClipAtPoint(missSound, transform.position);
+        }
+    }
+
+    public void PlayCatchSound() 
+    {
+        if (catchSound != null)
+        {
+            // Spielt den Sound an der aktuellen Position der Frucht ab
+            AudioSource.PlayClipAtPoint(catchSound, transform.position);
+        }
+    }
+
 }

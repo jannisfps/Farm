@@ -18,9 +18,16 @@ public class StartingValues : ScriptableObject
 
     
     [Header("Fruit Rotten Change in % (0- 100)")]
-    public float rottenChance = 10;
+    public float rottenChance = 0;
 
     [Header("Switch Fruit KeyBinds")]
     public KeyCode fruitUp = KeyCode.UpArrow;
     public KeyCode fruitDown = KeyCode.DownArrow;
+
+    
+    [Header("HitFeedback Images")]
+    public Sprite missedSprite;
+    public Sprite normalSprite;
+    public Sprite okeySprite;
+    public Sprite perfectSprite;
 }

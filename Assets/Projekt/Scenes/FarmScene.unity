@@ -835,7 +835,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 372.7, y: 445}
+  m_AnchoredPosition: {x: 0, y: 445}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &305930538
@@ -1069,7 +1069,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8886643011601718103, guid: 4538631b87ac83a4e8fc70ac206e6ea2, type: 3}
       propertyPath: radius
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8886643011601718103, guid: 4538631b87ac83a4e8fc70ac206e6ea2, type: 3}
       propertyPath: fruitPrefab
@@ -1233,7 +1233,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -707.76, y: 447.00003}
+  m_AnchoredPosition: {x: -707.76, y: 445}
   m_SizeDelta: {x: 48.299988, y: 46.1465}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &530499107
@@ -1510,10 +1510,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 2010972040}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 1}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -240, y: -160}
-  m_SizeDelta: {x: 160.3622, y: 36.7874}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 800, y: 445}
+  m_SizeDelta: {x: 400, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &552429747
 MonoBehaviour:
@@ -2085,7 +2085,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -602.6, y: 447.00003}
+  m_AnchoredPosition: {x: -602.6, y: 445}
   m_SizeDelta: {x: 48.299988, y: 46.1465}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &859875362
@@ -2463,6 +2463,7 @@ MonoBehaviour:
   - {fileID: 1637963146}
   scoreText: {fileID: 552429747}
   score: 0
+  loseSprite: {fileID: 3691801702647007524, guid: 20b595c00ac422d47963dceb4d54b935, type: 3}
   highlightMaterial: {fileID: 2100000, guid: 9719ed03699653e47be61780bf659e01, type: 2}
 --- !u!212 &1008345591
 SpriteRenderer:
@@ -2505,8 +2506,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 700189085
-  m_SortingLayer: 4
+  m_SortingLayerID: 636703505
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 3691801702647007524, guid: 20b595c00ac422d47963dceb4d54b935, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -2564,7 +2565,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -2641,7 +2642,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -812.18, y: 447}
+  m_AnchoredPosition: {x: -812.18, y: 445}
   m_SizeDelta: {x: 48.299988, y: 46.1465}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1117104236
@@ -3689,7 +3690,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -498.18, y: 447.21005}
+  m_AnchoredPosition: {x: -498.18, y: 445}
   m_SizeDelta: {x: 48.300003, y: 46.1465}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1655609152
@@ -4068,7 +4069,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1709854949
 RectTransform:
   m_ObjectHideFlags: 0

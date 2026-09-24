@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
     public GameObject[] healthHearts; 
     public TMP_Text scoreText;
     public float score = 0;
+    [SerializeField] private Sprite loseSprite;
 
     private bool isHitting;
     private SpriteRenderer sprite;
@@ -34,7 +35,7 @@ public class Player : MonoBehaviour
 
     void Start()
     {
-       
+        HighScore.instance.AddNewHighScore("System", 0);
         GainHealth(0); 
     }
 
@@ -80,8 +81,13 @@ public class Player : MonoBehaviour
             else
             {
                 HitType hit = GameManager.instance.CalculateHit(fruit);
+
+                if (hit == HitType.OffTiming) return;
+
+                HitFeedback(fruit, hit);
                 score = Mathf.Clamp(score + AddScore(fruit, hit), 0, 999999);
-                if (hit != HitType.Missed) Move(fruit);
+                Move(fruit); //if (hit != HitType.Missed) 
+                if (hit != HitType.Missed) fruit.PlayCatchSound(); else fruit.PlayMissedSound();
             }
 
             CollectFruit();
@@ -202,6 +208,7 @@ public class Player : MonoBehaviour
     public void GameOver()
     {
         HighScore.instance.AddNewHighScore(GameManager.instance.currentName, (int)score); 
+        if (loseSprite != null) sprite.sprite = loseSprite;
         GameManager.instance.TriggerGameOver();
     }
 
@@ -209,5 +216,41 @@ public class Player : MonoBehaviour
     {   
         if (fruit == null) return;
         transform.position = new Vector3(fruit.transform.position.x, transform.position.y, transform.position.z);
+    }
+
+    private void HitFeedback(Fruit fruit, HitType type) 
+    {
+        if (fruit == null) return;
+
+        GameObject hitFeedbackObj = new GameObject("HitFeedback");
+        hitFeedbackObj.transform.position = fruit.transform.position;
+        hitFeedbackObj.transform.rotation = fruit.transform.rotation;
+        
+        SpriteRenderer sr = hitFeedbackObj.AddComponent<SpriteRenderer>();
+        
+        switch (type) 
+        {
+            case HitType.Normal: 
+                if (GameManager.instance.sv.normalSprite != null) sr.sprite = GameManager.instance.sv.normalSprite;
+                break;
+            case HitType.Okey:
+                if (GameManager.instance.sv.okeySprite != null) sr.sprite = GameManager.instance.sv.okeySprite;
+                break;
+            case HitType.Perfect:
+                if (GameManager.instance.sv.perfectSprite != null) sr.sprite = GameManager.instance.sv.perfectSprite;
+                break;
+            default:
+                if (GameManager.instance.sv.missedSprite != null) sr.sprite = GameManager.instance.sv.missedSprite;
+                break;
+
+        }
+
+        if (fruit.TryGetComponent<SpriteRenderer>(out SpriteRenderer targetSR))
+        {
+            sr.sortingLayerID = targetSR.sortingLayerID;
+            sr.sortingOrder = targetSR.sortingOrder - 1;
+        }
+        
+        Destroy(hitFeedbackObj, 2);
     }
 }

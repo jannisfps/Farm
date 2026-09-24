@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PeachData
   m_EditorClassIdentifier: 
   fruitName: Peach
-  fruitSprite: {fileID: -6182139567355005811, guid: a5f11d039becf004ab9014e8855c7767, type: 3}
+  fruitSprite: {fileID: -9028580155354193792, guid: b6e46deeb3ec196468ccd6d0bfc8d7af, type: 3}
   rottenSprite: {fileID: 0}
   requiredKeys: 67000000
   perfectScore: 180

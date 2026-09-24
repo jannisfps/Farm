@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: OrangeData
   m_EditorClassIdentifier: 
   fruitName: Orange
-  fruitSprite: {fileID: 4121880872312635667, guid: 4a2face88fd09e84bb9daefe9fa369a0, type: 3}
+  fruitSprite: {fileID: -8704762154285039152, guid: 5ef641f2e4f0580449fee265d31322d1, type: 3}
   rottenSprite: {fileID: 0}
   requiredKeys: 73000000
   perfectScore: 60

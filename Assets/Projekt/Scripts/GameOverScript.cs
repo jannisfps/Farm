@@ -18,7 +18,7 @@ if ( GameManager.instance.gameOverCanvas != null)
          GameManager.instance.ResetGameValues();
 
         
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);    
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);  
     }
 
     // Zurück zum Startmenü (Exit)
