@@ -108,7 +108,7 @@ public class Player : MonoBehaviour
 
         CollectFruit();
 
-        scoreText.text = "SCORE: " + score;
+        scoreText.text = "" + score;
     }
 
     public void CollectFruit()

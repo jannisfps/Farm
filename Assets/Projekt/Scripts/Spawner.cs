@@ -48,7 +48,7 @@ public class Spawner2D : MonoBehaviour
     private List<FruitData> activeFruits = new List<FruitData>();
     private int nextFruitIndex = 0;
 
-    private void Start()
+    private void Awake()
     {   
         instance = this;
         if (upcomingFruits.Count != 0)
