@@ -15,7 +15,7 @@ MonoBehaviour:
   fruitName: Peach
   fruitSprite: {fileID: -9028580155354193792, guid: b6e46deeb3ec196468ccd6d0bfc8d7af, type: 3}
   rottenSprite: {fileID: 0}
-  requiredKeys: 67000000
+  requiredKey: 103
   perfectScore: 180
   okeyScore: 90
   normalScore: 60

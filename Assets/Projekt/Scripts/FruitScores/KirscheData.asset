@@ -15,7 +15,7 @@ MonoBehaviour:
   fruitName: Kirsche
   fruitSprite: {fileID: -7272269728935113758, guid: 51972ea6172db804c9b7935b3710960e, type: 3}
   rottenSprite: {fileID: 0}
-  requiredKeys: 64000000
+  requiredKey: 100
   perfectScore: 100
   okeyScore: 50
   normalScore: 25

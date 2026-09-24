@@ -15,7 +15,7 @@ MonoBehaviour:
   fruitName: Birne
   fruitSprite: {fileID: 5675151382115074667, guid: 413347a7e4ba22a49bfc1ead4433f3e7, type: 3}
   rottenSprite: {fileID: 0}
-  requiredKeys: 66000000
+  requiredKey: 102
   perfectScore: 135
   okeyScore: 67
   normalScore: 45

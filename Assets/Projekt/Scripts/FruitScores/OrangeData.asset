@@ -15,7 +15,7 @@ MonoBehaviour:
   fruitName: Orange
   fruitSprite: {fileID: -8704762154285039152, guid: 5ef641f2e4f0580449fee265d31322d1, type: 3}
   rottenSprite: {fileID: 0}
-  requiredKeys: 73000000
+  requiredKey: 115
   perfectScore: 60
   okeyScore: 30
   normalScore: 20

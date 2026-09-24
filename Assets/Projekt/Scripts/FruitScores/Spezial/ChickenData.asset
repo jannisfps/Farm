@@ -10,12 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f24d893ae358004499ab0c66a5f64f5a, type: 3}
-  m_Name: BananaData
+  m_Name: ChickenData
   m_EditorClassIdentifier: 
-  fruitName: Banana
-  fruitSprite: {fileID: -5876930758119581521, guid: f7b9223d3745d4b45a7ca58202a8d5f7, type: 3}
+  fruitName: Peach
+  fruitSprite: {fileID: 21300000, guid: 923d5ff507b00f8478969e4017615c2c, type: 3}
   rottenSprite: {fileID: 0}
-  requiredKey: 104
-  perfectScore: 240
-  okeyScore: 120
-  normalScore: 80
+  requiredKey: 119
+  perfectScore: 0
+  okeyScore: 0
+  normalScore: 0
+  SpawnChance: 0.1
+  isChicken: 1

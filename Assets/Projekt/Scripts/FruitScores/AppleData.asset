@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: AppleData
   m_EditorClassIdentifier: 
   fruitName: Apple
-  fruitSprite: {fileID: 7293598183456022363, guid: 3c3cab7eabeb9af46b1eddd6b9f9df9a, type: 3}
+  fruitSprite: {fileID: 5240102634304162448, guid: 08da105bbd67f9343bbb8db844f46d7c, type: 3}
   rottenSprite: {fileID: 0}
-  requiredKeys: 61000000
+  requiredKey: 97
   perfectScore: 45
   okeyScore: 22
   normalScore: 15

@@ -16,12 +16,13 @@ public class Player : MonoBehaviour
     private bool isHitting;
     private SpriteRenderer sprite;
     private Fruit fruit;
-    private HashSet<KeyCode> _pressedThisFrame = new HashSet<KeyCode>();
+    private List<KeyCode> _pressedThisFrame = new List<KeyCode>();
     
     public int health {get; private set;}
 
     private GameObject visualHighlight;
     public Material highlightMaterial;
+    private HashSet<KeyCode> allKeys = new HashSet<KeyCode>();
 
     void Awake()
     {   
@@ -37,16 +38,23 @@ public class Player : MonoBehaviour
     {
         HighScore.instance.AddNewHighScore("System", 0);
         GainHealth(0); 
+
+        foreach(FruitData data in Spawner2D.instance.upcomingFruits)
+        {
+            allKeys.Add(data.requiredKey);
+        }
     }
 
     void Update()
     {   
+        if (isHitting) return;
         if (GameManager.instance.currentState == GameState.GameOver) return;
         if(GameManager.instance.fruits.Count == 0) return;
         
         if(fruit == null) GetFruit(0);
         if(fruit == null) return;
 
+        /*
         if (Input.GetKeyDown(GameManager.instance.sv.fruitUp) && GameManager.instance.fruits.Count > GameManager.instance.fruits.IndexOf(fruit))
         {   
             int index = GameManager.instance.fruits.IndexOf(fruit);
@@ -60,9 +68,11 @@ public class Player : MonoBehaviour
         }
 
         if(fruit == null) return;
+        */
 
         _pressedThisFrame.Clear();
-        foreach(KeyCode key in fruit.fruitData.requiredKeys)
+
+        foreach(KeyCode key in allKeys)
         {
             if (Input.GetKeyDown(key))
             {
@@ -71,38 +81,39 @@ public class Player : MonoBehaviour
         }
 
         if (_pressedThisFrame.Count == 0) return;
-        
-        if (_pressedThisFrame.Count == fruit.fruitData.requiredKeys.Count)
+        if (_pressedThisFrame.Count > 1 || _pressedThisFrame[0] != fruit.fruitData.requiredKey) 
         {   
-            if (fruit.isRotten)
-            {
-                GainHealth(-1);
-            }
-            else
-            {
-                HitType hit = GameManager.instance.CalculateHit(fruit);
-
-                if (hit == HitType.OffTiming) return;
-
-                HitFeedback(fruit, hit);
-                score = Mathf.Clamp(score + AddScore(fruit, hit), 0, 999999);
-                Move(fruit); //if (hit != HitType.Missed) 
-                if (hit != HitType.Missed) fruit.PlayCatchSound(); else fruit.PlayMissedSound();
-            }
-
-            CollectFruit();
-        }
-       /* else
-        {
+            // Hit Cooldown
             isHitting = true;
             StartCoroutine(Hitting(GameManager.instance.sv.hitCooldown));
-        }*/
+            return;
+        }
+        
+          
+        if (fruit.isRotten)
+        {
+            GainHealth(-1);
+        }
+        else
+        {
+            HitType hit = GameManager.instance.CalculateHit(fruit);
+
+            if (hit == HitType.OffTiming) return;
+
+            HitFeedback(fruit, hit);
+            score = Mathf.Clamp(score + AddScore(fruit, hit), 0, 999999);
+            Move(fruit); //if (hit != HitType.Missed) 
+            if (hit != HitType.Missed) fruit.PlayCatchSound(); else fruit.PlayMissedSound();
+        }
+
+        CollectFruit();
 
         scoreText.text = "SCORE: " + score;
     }
 
     public void CollectFruit()
     {   
+        if(fruit.fruitData.isChicken) GainHealth(1);
         GameManager.instance.fruits.Remove(fruit);
         Destroy(fruit.gameObject);
     } 

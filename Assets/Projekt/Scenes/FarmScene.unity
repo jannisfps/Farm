@@ -1029,7 +1029,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 291409106330302228, guid: 4538631b87ac83a4e8fc70ac206e6ea2, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.89
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 291409106330302228, guid: 4538631b87ac83a4e8fc70ac206e6ea2, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1084,13 +1084,25 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: cc1725e5c5e490e468ba5fb131e91a89, type: 2}
     - target: {fileID: 8886643011601718103, guid: 4538631b87ac83a4e8fc70ac206e6ea2, type: 3}
+      propertyPath: specialFruits.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8886643011601718103, guid: 4538631b87ac83a4e8fc70ac206e6ea2, type: 3}
       propertyPath: prefabsToSpawn.Array.size
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8886643011601718103, guid: 4538631b87ac83a4e8fc70ac206e6ea2, type: 3}
       propertyPath: upcomingFruits.Array.size
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 8886643011601718103, guid: 4538631b87ac83a4e8fc70ac206e6ea2, type: 3}
+      propertyPath: 'specialFruits.Array.data[0]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 7e27c9dde82546540ab10a886eff1ff6, type: 2}
+    - target: {fileID: 8886643011601718103, guid: 4538631b87ac83a4e8fc70ac206e6ea2, type: 3}
+      propertyPath: 'specialFruits.Array.data[1]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 8bf4e0ae324800f4b8b387384b0a38b2, type: 2}
     - target: {fileID: 8886643011601718103, guid: 4538631b87ac83a4e8fc70ac206e6ea2, type: 3}
       propertyPath: 'prefabsToSpawn.Array.data[0]'
       value: 
@@ -1102,21 +1114,25 @@ PrefabInstance:
     - target: {fileID: 8886643011601718103, guid: 4538631b87ac83a4e8fc70ac206e6ea2, type: 3}
       propertyPath: 'upcomingFruits.Array.data[0]'
       value: 
-      objectReference: {fileID: 11400000, guid: 349d7223fe3655f4db5bf961e6001776, type: 2}
+      objectReference: {fileID: 11400000, guid: cc1725e5c5e490e468ba5fb131e91a89, type: 2}
     - target: {fileID: 8886643011601718103, guid: 4538631b87ac83a4e8fc70ac206e6ea2, type: 3}
       propertyPath: 'upcomingFruits.Array.data[1]'
       value: 
-      objectReference: {fileID: 11400000, guid: 9c3522fe0c085434487228a3aca5dac6, type: 2}
+      objectReference: {fileID: 11400000, guid: 349d7223fe3655f4db5bf961e6001776, type: 2}
     - target: {fileID: 8886643011601718103, guid: 4538631b87ac83a4e8fc70ac206e6ea2, type: 3}
       propertyPath: 'upcomingFruits.Array.data[2]'
       value: 
-      objectReference: {fileID: 11400000, guid: c96c1acb59170ec489aca1c7c8e9696a, type: 2}
+      objectReference: {fileID: 11400000, guid: 9c3522fe0c085434487228a3aca5dac6, type: 2}
     - target: {fileID: 8886643011601718103, guid: 4538631b87ac83a4e8fc70ac206e6ea2, type: 3}
       propertyPath: 'upcomingFruits.Array.data[3]'
       value: 
-      objectReference: {fileID: 11400000, guid: 7fb517401e2aea64d980e2b6ddc3fe4a, type: 2}
+      objectReference: {fileID: 11400000, guid: c96c1acb59170ec489aca1c7c8e9696a, type: 2}
     - target: {fileID: 8886643011601718103, guid: 4538631b87ac83a4e8fc70ac206e6ea2, type: 3}
       propertyPath: 'upcomingFruits.Array.data[4]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 7fb517401e2aea64d980e2b6ddc3fe4a, type: 2}
+    - target: {fileID: 8886643011601718103, guid: 4538631b87ac83a4e8fc70ac206e6ea2, type: 3}
+      propertyPath: 'upcomingFruits.Array.data[5]'
       value: 
       objectReference: {fileID: 11400000, guid: 945e9b5204b375c428e295005866c073, type: 2}
     m_RemovedComponents: []
@@ -3386,8 +3402,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 700189085
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 4118347501131271622, guid: 737b3361c66f2774997c9d04a7425a39, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

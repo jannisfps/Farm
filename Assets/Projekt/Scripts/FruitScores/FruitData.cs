@@ -10,10 +10,15 @@ public class FruitData : ScriptableObject
     public Sprite rottenSprite;
 
     [Header("Input Settings")]
-    public List<KeyCode> requiredKeys = new List<KeyCode>();
+    public KeyCode requiredKey;
 
     [Header("Score Values per HitType")]
     public float perfectScore = 100f;
     public float okeyScore = 50f;
     public float normalScore = 25f;
+
+    
+    [Header("Only for Special Objects")]
+    public float SpawnChance = 0;
+    public bool isChicken = false;
 }

@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Spawner2D : MonoBehaviour
-{
+{   
+    public static Spawner2D instance;
+
     [Header("--- 1. BASIS EINSTELLUNGEN ---")]
     [Tooltip("Das Haupt-Prefab für alle Früchte.")]
     public GameObject fruitPrefab;
@@ -28,13 +30,11 @@ public class Spawner2D : MonoBehaviour
     [Tooltip("Sicherheitsgrenze: Schneller als diesen Wert (in Sek.) wird nicht gespawnt.")]
     public float minSpawnInterval = 0.5f;
 
-
-    [Header("--- 3. FRUCHT-PROGRESSION ---")]
-    [Tooltip("Die erste Frucht, die direkt ab Start spawnt (z. B. Apfel).")]
-    public FruitData startingFruit;
-
     [Tooltip("Liste der nächsten Früchte. Werden nacheinander freigeschaltet.")]
     public List<FruitData> upcomingFruits = new List<FruitData>();
+    
+    [Tooltip("Liste der Spezial-Früchte.")]
+    public List<FruitData> specialFruits = new List<FruitData>();
 
     [Tooltip("Alle wie vielen Sekunden wird die nächste Frucht aus der Liste freigeschaltet?")]
     public float unlockInterval = 15f;
@@ -49,10 +49,11 @@ public class Spawner2D : MonoBehaviour
     private int nextFruitIndex = 0;
 
     private void Start()
-    {
-        if (startingFruit != null)
+    {   
+        instance = this;
+        if (upcomingFruits.Count != 0)
         {
-            activeFruits.Add(startingFruit);
+            activeFruits.Add(upcomingFruits[0]);
         }
 
         if (spawnOnStart)
@@ -99,12 +100,23 @@ public class Spawner2D : MonoBehaviour
         if (activeFruits.Count == 0 || fruitPrefab == null) return;
 
         for (int i = 0; i < countPerSpawn; i++)
-        {
+        {   
+            FruitData randomData = activeFruits[Random.Range(0, activeFruits.Count)];
+
+            if (specialFruits.Count != null) {
+                foreach (FruitData data in specialFruits) 
+                {
+
+                    float rdm = Random.value;
+                    if (rdm <= data.SpawnChance) {
+                        randomData = data;
+                    }
+                }
+            }
+
             Vector2 randomPosition = GetRandomPositionInRadius();
 
             GameObject spawnedObject = Instantiate(fruitPrefab, randomPosition, Quaternion.identity);
-
-            FruitData randomData = activeFruits[Random.Range(0, activeFruits.Count)];
 
             Fruit fruitComponent = spawnedObject.GetComponent<Fruit>();
             if (fruitComponent != null)
