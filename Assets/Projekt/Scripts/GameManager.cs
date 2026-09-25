@@ -13,7 +13,7 @@ public enum HitType
 }
 public enum GameState
 {
-    Playing, GameOver
+    Playing, GameOver, Title
 }
 
 [DefaultExecutionOrder(-99999)]

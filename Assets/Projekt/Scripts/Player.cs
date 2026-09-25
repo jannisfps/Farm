@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
     public TMP_Text scoreText;
     public float score = 0;
     [SerializeField] private Sprite loseSprite;
+    [SerializeField] private Sprite normalSprite;
 
     private bool isHitting;
     private SpriteRenderer sprite;
@@ -43,12 +44,13 @@ public class Player : MonoBehaviour
         {
             allKeys.Add(data.requiredKey);
         }
+        sprite.sprite = normalSprite;
     }
 
     void Update()
     {   
         if (isHitting) return;
-        if (GameManager.instance.currentState == GameState.GameOver) return;
+        if (GameManager.instance.currentState != GameState.Playing) return;
         if(GameManager.instance.fruits.Count == 0) return;
         
         if(fruit == null) GetFruit(0);

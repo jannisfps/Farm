@@ -42,7 +42,7 @@ public class Spawner2D : MonoBehaviour
 
     [Header("--- 4. OPTIONEN ---")]
     [Tooltip("Soll das Spawnen automatisch direkt bei Spielstart beginnen?")]
-    public bool spawnOnStart = true;
+    public bool spawnOnStart = false;
 
 
     private List<FruitData> activeFruits = new List<FruitData>();
