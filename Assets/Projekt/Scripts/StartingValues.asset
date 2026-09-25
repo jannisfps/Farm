@@ -15,8 +15,8 @@ MonoBehaviour:
   startGameSpeed: 1
   gameSpeedIncrease: 0.1
   health: 4
-  hitCooldown: 0.35
-  penaltyCooldown: 0.5
+  hitCooldown: 0
+  penaltyCooldown: 0
   missFruitCost: 20
   rottenChance: 0
   fruitUp: 273
