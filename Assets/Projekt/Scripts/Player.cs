@@ -16,6 +16,7 @@ public class Player : MonoBehaviour
 
     private bool isHitting;
     private SpriteRenderer sprite;
+    private Animator animator;
     private Fruit fruit;
     private List<KeyCode> _pressedThisFrame = new List<KeyCode>();
     
@@ -28,6 +29,7 @@ public class Player : MonoBehaviour
     void Awake()
     {   
         sprite = GetComponent<SpriteRenderer>();
+        animator = GetComponent<Animator>();
 
         health = GameManager.instance.sv.health;
         GameManager.instance.player = this;
@@ -115,6 +117,7 @@ public class Player : MonoBehaviour
 
     public void CollectFruit()
     {   
+        animator.SetTrigger("pickUpTrigger");
         if(fruit.fruitData.isChicken) GainHealth(1);
         GameManager.instance.fruits.Remove(fruit);
         Destroy(fruit.gameObject);
