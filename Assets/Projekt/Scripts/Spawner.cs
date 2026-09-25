@@ -103,16 +103,19 @@ public class Spawner2D : MonoBehaviour
         {   
             FruitData randomData = activeFruits[Random.Range(0, activeFruits.Count)];
 
-            if (specialFruits.Count != null) {
-                foreach (FruitData data in specialFruits) 
-                {
+            if (specialFruits.Count > 0) 
+    {
+        foreach (FruitData data in specialFruits) 
+        {
+            float rdm = Random.value; 
 
-                    float rdm = Random.value;
-                    if (rdm <= data.SpawnChance) {
-                        randomData = data;
-                    }
-                }
+            if (rdm <= data.SpawnChance) 
+            {
+                randomData = data;
+                break; 
             }
+        }
+    }
 
             Vector2 randomPosition = GetRandomPositionInRadius();
 
